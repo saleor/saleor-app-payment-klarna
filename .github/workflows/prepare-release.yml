@@ -50,7 +50,7 @@ jobs:
         with:
           destination_branch: "main"
           pr_title: "[Automated] Release ${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}"
-          pr_body: "Changelog: https://github.com/saleor/saleor-app-payment-template/releases/tag/v${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}"
+          pr_body: "Changelog: https://github.com/saleor/saleor-app-payment-klarna/releases/tag/v${{ fromJson(steps.changesets.outputs.publishedPackages)[0].version }}"
 
       - name: Approve PR to main
         if: steps.changesets.outputs.hasChangesets == 'false' && steps.changesets.outputs.published == 'true'

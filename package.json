@@ -1,13 +1,13 @@
 {
   "$schema": "https://json.schemastore.org/package.json",
-  "name": "saleor-app-payment-template",
+  "name": "saleor-app-payment-klarna",
   "description": "Saleor App Payment Template",
   "version": "0.0.0",
   "private": true,
-  "repository": "github:saleor/saleor-app-payment-template",
-  "homepage": "https://github.com/saleor/saleor-app-payment-template",
+  "repository": "github:saleor/saleor-app-payment-klarna",
+  "homepage": "https://github.com/saleor/saleor-app-payment-klarna",
   "bugs": {
-    "url": "https://github.com/saleor/saleor-app-payment-template/issues",
+    "url": "https://github.com/saleor/saleor-app-payment-klarna/issues",
     "email": "hello@saleor.io"
   },
   "type": "module",
