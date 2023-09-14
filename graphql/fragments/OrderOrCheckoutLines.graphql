@@ -1,6 +1,7 @@
 fragment OrderOrCheckoutLines on OrderOrCheckout {
   __typename
   ... on Checkout {
+    id
     channel {
       id
       slug
@@ -27,6 +28,17 @@ fragment OrderOrCheckoutLines on OrderOrCheckout {
       __typename
       id
       quantity
+      unitPrice {
+        gross {
+          ...Money
+        }
+        net {
+          ...Money
+        }
+        tax {
+          ...Money
+        }
+      }
       totalPrice {
         gross {
           ...Money
@@ -39,6 +51,7 @@ fragment OrderOrCheckoutLines on OrderOrCheckout {
         }
       }
       checkoutVariant: variant {
+        id
         name
         sku
         product {
@@ -54,6 +67,7 @@ fragment OrderOrCheckoutLines on OrderOrCheckout {
     }
   }
   ... on Order {
+    id
     channel {
       id
       slug
@@ -81,6 +95,17 @@ fragment OrderOrCheckoutLines on OrderOrCheckout {
       id
       quantity
       taxRate
+      unitPrice {
+        gross {
+          ...Money
+        }
+        net {
+          ...Money
+        }
+        tax {
+          ...Money
+        }
+      }
       totalPrice {
         gross {
           ...Money
@@ -93,6 +118,7 @@ fragment OrderOrCheckoutLines on OrderOrCheckout {
         }
       }
       orderVariant: variant {
+        id
         name
         sku
         product {
