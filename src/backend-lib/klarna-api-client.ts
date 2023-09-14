@@ -12,14 +12,29 @@ import { type paths } from "../../generated/klarna";
  * - North America:  https://api-na.playground.klarna.com/
  * - Oceania:  https://api-oc.playground.klarna.com/
  */
-export const getKlarnaApiClient = (klarnaApiUrl: string) => {
+export const getKlarnaApiClient = ({
+  klarnaApiUrl,
+  username,
+  password,
+}: {
+  klarnaApiUrl: string;
+  username: string;
+  password: string;
+}) => {
   const fetcher = Fetcher.for<paths>();
   fetcher.configure({
     baseUrl: klarnaApiUrl,
     init: {
-      headers: {},
+      headers: {
+        Authorization: getAuthorizationHeader({ username, password }),
+      },
     },
     use: [],
   });
   return fetcher;
+};
+
+const getAuthorizationHeader = ({ username, password }: { username: string; password: string }) => {
+  const encoded = btoa(`${username}:${password}`);
+  return `Basic ${encoded}`;
 };
