@@ -36,7 +36,7 @@
     "schemaVersion": "3.15"
   },
   "dependencies": {
-    "@hookform/resolvers": "3.3.0",
+    "@hookform/resolvers": "3.3.1",
     "@next/env": "13.4.19",
     "@radix-ui/react-alert-dialog": "1.0.4",
     "@saleor/app-sdk": "0.43.0",
