@@ -7,9 +7,10 @@
       "type": "object",
       "additionalProperties": true,
       "properties": {
-        "paymentDetailsResponse": { "$ref": "definitions.json#/definitions/JSON" },
+        "klarnaOrderResponse": { "$ref": "definitions.json#/definitions/JSON" },
         "errors": { "$ref": "definitions.json#/definitions/SyncWebhookAppErrors" }
-      }
+      },
+      "required": ["klarnaOrderResponse"]
     },
     "result": { "$ref": "definitions.json#/definitions/TransactionSessionResult" },
     "amount": { "$ref": "definitions.json#/definitions/PositiveDecimal" },

@@ -1,8 +1,18 @@
 import { Fetcher } from "openapi-typescript-fetch";
 import { invariant } from "@/lib/invariant";
 import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
-import { type OrderOrCheckoutLinesFragment } from "generated/graphql";
+import {
+  type TransactionInitializeSessionAddressFragment,
+  type OrderOrCheckoutLinesFragment,
+} from "generated/graphql";
 import { type paths, type components } from "generated/klarna";
+
+export type KlarnaMetadata = {
+  transactionId: string;
+  channelId: string;
+  checkoutId?: string | undefined;
+  orderId?: string | undefined;
+};
 
 /**
  * ### Base URLs - Live (production)
@@ -104,4 +114,39 @@ export const getLineItems = ({
   });
 
   return [...lineItems, shippingLineItem].filter(Boolean);
+};
+
+export const prepareRequestAddress = (
+  address: undefined | null | TransactionInitializeSessionAddressFragment,
+  email: undefined | null | string,
+): undefined | components["schemas"]["address"] => {
+  if (!address) {
+    return undefined;
+  }
+
+  return {
+    given_name: address.firstName,
+    family_name: address.lastName,
+    email: email ?? undefined,
+    street_address: address.streetAddress1,
+    street_address2: address.streetAddress2,
+    postal_code: address.postalCode,
+    city: address.city,
+    region: address.countryArea,
+    phone: address.phone ?? undefined,
+    country: address.country.code,
+  };
+};
+
+export const createMerchantConfirmationUrl = (
+  returnUrl: string | undefined | null,
+  transactionId: string,
+) => {
+  if (!returnUrl) {
+    return "";
+  }
+
+  const url = new URL(returnUrl);
+  url.searchParams.append("transaction", transactionId);
+  return url.toString();
 };
