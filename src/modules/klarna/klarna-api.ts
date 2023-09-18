@@ -81,7 +81,7 @@ export const getLineItems = ({
     invariant(variant, `Unknown line type: ${line.__typename || "<undefined>"}`);
 
     const klarnaLineItem: components["schemas"]["order_line"] = {
-      type: "physical",
+      type: line.requiresShipping ? "physical" : "digital",
       reference: variant.sku || variant.id,
       name: variant.product.name + " - " + variant.name,
       quantity: line.quantity,

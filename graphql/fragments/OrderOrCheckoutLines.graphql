@@ -28,6 +28,7 @@ fragment OrderOrCheckoutLines on OrderOrCheckout {
       __typename
       id
       quantity
+      requiresShipping
       unitPrice {
         gross {
           ...Money
@@ -95,6 +96,7 @@ fragment OrderOrCheckoutLines on OrderOrCheckout {
       id
       quantity
       taxRate
+      requiresShipping: isShippingRequired
       unitPrice {
         gross {
           ...Money

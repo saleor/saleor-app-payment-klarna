@@ -6,6 +6,10 @@ import { getConfigurationForChannel } from "@/modules/payment-app-configuration/
 import { getWebhookPaymentAppConfigurator } from "@/modules/payment-app-configuration/payment-app-configuration-factory";
 import { paymentAppFullyConfiguredEntrySchema } from "@/modules/payment-app-configuration/config-entry";
 import { getLineItems, getKlarnaApiClient } from "@/modules/klarna/klarna-api";
+import { type components } from "generated/klarna";
+import { obfuscateConfig } from "@/modules/app-configuration/utils";
+import { type JSONObject } from "@/types";
+import { KlarnaHttpClientError } from "@/errors";
 
 export const TransactionInitializeSessionWebhookHandler = async (
   event: TransactionInitializeSessionEventFragment,
@@ -39,6 +43,7 @@ export const TransactionInitializeSessionWebhookHandler = async (
   );
 
   const klarnaClient = getKlarnaApiClient({
+    // @todo get URL from settings
     klarnaApiUrl: "https://api.playground.klarna.com/",
     username: klarnaConfig.username,
     password: klarnaConfig.password,
@@ -55,75 +60,35 @@ export const TransactionInitializeSessionWebhookHandler = async (
 
   invariant(country, "Missing country code");
 
-  await createKlarnaSession({
+  const createKlarnaSessionPayload: components["schemas"]["session_create"] = {
     locale,
     purchase_country: country,
     purchase_currency: event.action.currency,
     order_amount: event.action.amount,
     order_lines: getLineItems(event.sourceObject),
     intent: "buy",
-  });
+  };
+  logger.debug({ ...obfuscateConfig(createKlarnaSessionPayload) }, "createKlarnaSession payload");
 
-  const klarnaPaymentRequest = await transactionInitializeSessionEventToKlarna(
-    event,
-    klarnaConfig.merchantAccount,
-  );
-  // logger.debug(
-  //   {
-  //     klarnaPaymentRequest: {
-  //       ...obfuscateConfig(klarnaPaymentRequest),
-  //       merchantAccount: klarnaPaymentRequest.merchantAccount,
-  //       amount: klarnaPaymentRequest.amount,
-  //       paymentMethod: klarnaPaymentRequest.paymentMethod,
-  //       reference: klarnaPaymentRequest.reference,
-  //       channel: klarnaPaymentRequest.channel,
-  //     },
-  //     environment: klarnaConfig.environment,
-  //   },
-  //   "klarnaPaymentRequest payload",
-  // );
-  // const klarnaPaymentResponse = await initializeKlarnaPayment({
-  //   klarnaPaymentRequest,
-  //   apiKey: klarnaConfig.apiKey,
-  //   environment: klarnaConfig.environment,
-  //   prefixUrl: klarnaConfig.prefixUrl,
-  // });
-  // const { pspReference, resultCode, fraudResult, paymentMethod } = klarnaPaymentResponse;
-  // logger.debug(
-  //   { pspReference, resultCode, fraudResult, paymentMethod },
-  //   "klarnaPaymentRequest result",
-  // );
+  const klarnaSession = await createKlarnaSession(createKlarnaSessionPayload);
+  logger.debug({ ...obfuscateConfig(klarnaSession) }, "createKlarnaSession result");
 
-  // const result = klarnaResultCodeToTransactionResult(
-  //   event.action.actionType,
-  //   klarnaPaymentResponse,
-  // );
-  // logger.debug(result, "Klarna -> Transaction result");
+  if (!klarnaSession.ok) {
+    throw new KlarnaHttpClientError(klarnaSession.statusText, { errors: [klarnaSession.data] });
+  }
 
-  // const data = {
-  //   paymentResponse: klarnaPaymentResponse as JSONObject,
-  // };
+  const data = {
+    paymentResponse: klarnaSession.data as JSONObject,
+  };
 
-  // const transactionInitializeSessionResponse: TransactionInitializeSessionResponse = {
-  //   data,
-  //   pspReference: klarnaPaymentResponse.pspReference,
-  //   result,
-  //   actions: klarnaResultCodeToActions(event.action.actionType, klarnaPaymentResponse),
-  //   amount: klarnaPaymentResponse.amount
-  //     ? getSaleorAmountFromKlarnaInteger(
-  //         klarnaPaymentResponse.amount?.value,
-  //         klarnaPaymentResponse.amount?.currency,
-  //       )
-  //     : // If Klarna didn't provide an amount, fallback to amount from the request
-  //       action.amount,
-  //   message: klarnaPaymentResponse.refusalReason,
-  //   externalUrl: klarnaPaymentResponse.pspReference
-  //     ? getKlarnaExternalUrlForPsp({
-  //         environment: klarnaConfig.environment,
-  //         pspReference: klarnaPaymentResponse.pspReference,
-  //       })
-  //     : undefined,
-  // };
-
+  const transactionInitializeSessionResponse: TransactionInitializeSessionResponse = {
+    data,
+    pspReference: klarnaSession.data.session_id,
+    result: "CHARGE_REQUEST",
+    actions: [],
+    amount: action.amount,
+    message: "",
+    externalUrl: undefined, // @todo,
+  };
   return transactionInitializeSessionResponse;
 };
