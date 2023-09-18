@@ -40,7 +40,7 @@ export default transactionProcessSessionSyncWebhook.createHandler(
             ? TransactionEventTypeEnum.AuthorizationFailure
             : TransactionEventTypeEnum.ChargeFailure,
         message: errorResponse.message,
-        data: { errors: errorResponse.errors, paymentDetailsResponse: {} },
+        data: { errors: errorResponse.errors, klarnaOrderResponse: {} },
         // @todo consider making pspReference optional https://github.com/saleor/saleor/issues/12490
         pspReference: uuidv7(),
       } as const;
