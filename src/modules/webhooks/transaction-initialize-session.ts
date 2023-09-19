@@ -46,8 +46,7 @@ export const TransactionInitializeSessionWebhookHandler = async (
   );
 
   const klarnaClient = getKlarnaApiClient({
-    // @todo get URL from settings
-    klarnaApiUrl: "https://api.playground.klarna.com/",
+    klarnaApiUrl: klarnaConfig.apiUrl,
     username: klarnaConfig.username,
     password: klarnaConfig.password,
   });

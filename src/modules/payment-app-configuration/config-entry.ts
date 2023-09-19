@@ -16,6 +16,7 @@ export const paymentAppConfigEntryEncryptedSchema = z.object({
 export const paymentAppConfigEntryPublicSchema = z.object({
   username: z.string().min(1).nullish(),
   configurationName: z.string().min(1),
+  apiUrl: z.string().url().min(1).nullish(),
 });
 
 export const paymentAppConfigEntrySchema = paymentAppConfigEntryInternalSchema
@@ -37,9 +38,7 @@ export const paymentAppFullyConfiguredEntrySchema = z
     configurationId: paymentAppConfigEntryInternalSchema.shape.configurationId,
     password: paymentAppConfigEntryEncryptedSchema.shape.password.unwrap(),
     username: paymentAppConfigEntryPublicSchema.shape.username.unwrap().unwrap(),
-    webhookPassword: DANGEROUS_paymentAppConfigEntryHiddenSchema.shape.webhookPassword
-      .unwrap()
-      .unwrap(),
+    apiUrl: paymentAppConfigEntryPublicSchema.shape.apiUrl.unwrap().unwrap(),
   })
   .required();
 
