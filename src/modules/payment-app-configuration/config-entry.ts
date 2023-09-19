@@ -14,8 +14,8 @@ export const paymentAppConfigEntryEncryptedSchema = z.object({
 });
 
 export const paymentAppConfigEntryPublicSchema = z.object({
-  username: z.string().min(1).nullish(),
   configurationName: z.string().min(1),
+  username: z.string().min(1).nullish(),
   apiUrl: z.string().url().min(1).nullish(),
 });
 

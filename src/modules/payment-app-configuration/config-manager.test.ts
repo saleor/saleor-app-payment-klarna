@@ -50,10 +50,12 @@ describe("addConfigEntry", () => {
       configurationName: "new-config",
       password: "new-key",
       username: "client-key",
+      apiUrl: "https://api.playground.klarna.com/",
     };
     const result = await addConfigEntry(input, mockConfigurator);
 
     expect(result).toStrictEqual({
+      apiUrl: "https://api.playground.klarna.com/",
       configurationName: input.configurationName,
       password: `${OBFUSCATION_DOTS}key`,
       configurationId: expect.any(String),
@@ -69,7 +71,7 @@ describe("updateConfigEntry", () => {
       configurationId: configEntryAll.configurationId,
       entry: {
         configurationName: "new-name",
-        password: "updated-key",
+        password: "updated-password",
         username: configEntryAll.username,
       },
     } satisfies ConfigEntryUpdate;
