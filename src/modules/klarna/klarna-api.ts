@@ -1,4 +1,4 @@
-import { Fetcher } from "openapi-typescript-fetch";
+import { ApiError, Fetcher } from "openapi-typescript-fetch";
 import { invariant } from "@/lib/invariant";
 import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
 import {
@@ -6,6 +6,7 @@ import {
   type OrderOrCheckoutLinesFragment,
 } from "generated/graphql";
 import { type paths, type components } from "generated/klarna";
+import { KlarnaHttpClientError } from "@/errors";
 
 export type KlarnaMetadata = {
   transactionId: string;
@@ -33,6 +34,8 @@ export const getKlarnaApiClient = ({
   username: string;
   password: string;
 }) => {
+  klarnaApiUrl = klarnaApiUrl.trim();
+  klarnaApiUrl = klarnaApiUrl.endsWith("/") ? klarnaApiUrl.slice(0, -1) : klarnaApiUrl;
   const fetcher = Fetcher.for<paths>();
   fetcher.configure({
     baseUrl: klarnaApiUrl,
@@ -41,7 +44,16 @@ export const getKlarnaApiClient = ({
         Authorization: getAuthorizationHeader({ username, password }),
       },
     },
-    use: [],
+    use: [
+      (url, init, next) =>
+        next(url, init).catch((err) => {
+          if (err instanceof ApiError) {
+            throw new KlarnaHttpClientError(err.statusText, { errors: [err.data] });
+          } else {
+            throw err;
+          }
+        }),
+    ],
   });
   return fetcher;
 };

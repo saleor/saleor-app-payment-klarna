@@ -19,6 +19,7 @@ import { paymentAppFullyConfiguredEntrySchema } from "@/modules/payment-app-conf
 import { getWebhookPaymentAppConfigurator } from "@/modules/payment-app-configuration/payment-app-configuration-factory";
 import { type components } from "generated/klarna";
 import { KlarnaHttpClientError } from "@/errors";
+import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
 
 export const TransactionProcessSessionWebhookHandler = async (
   event: TransactionProcessSessionEventFragment,
@@ -89,7 +90,7 @@ export const TransactionProcessSessionWebhookHandler = async (
     purchase_currency: event.action.currency,
     billing_address: prepareRequestAddress(event.sourceObject.billingAddress, email),
     shipping_address: prepareRequestAddress(event.sourceObject.shippingAddress, email),
-    order_amount: event.action.amount,
+    order_amount: getKlarnaIntegerAmountFromSaleor(event.action.amount, event.action.currency),
     order_tax_amount: 0, // @todo
     order_lines: getLineItems(event.sourceObject),
     merchant_urls: {

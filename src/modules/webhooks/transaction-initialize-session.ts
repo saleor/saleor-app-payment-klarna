@@ -13,6 +13,7 @@ import { type components } from "generated/klarna";
 import { obfuscateConfig } from "@/modules/app-configuration/utils";
 import { type JSONObject } from "@/types";
 import { KlarnaHttpClientError } from "@/errors";
+import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
 
 export const TransactionInitializeSessionWebhookHandler = async (
   event: TransactionInitializeSessionEventFragment,
@@ -71,13 +72,16 @@ export const TransactionInitializeSessionWebhookHandler = async (
     ...(event.sourceObject.__typename === "Order" && { orderId: event.sourceObject.id }),
   };
 
+  const orderLines = getLineItems(event.sourceObject);
+  const orderTaxAmount = orderLines.reduce((acc, line) => acc + (line.total_tax_amount ?? 0), 0);
+
   const createKlarnaSessionPayload: components["schemas"]["session_create"] = {
-    locale,
+    locale: locale.split("_")[0],
     purchase_country: country,
     purchase_currency: event.action.currency,
-    order_amount: event.action.amount,
-    order_tax_amount: 0, // @todo
-    order_lines: getLineItems(event.sourceObject),
+    order_amount: getKlarnaIntegerAmountFromSaleor(event.action.amount, event.action.currency),
+    order_tax_amount: orderTaxAmount,
+    order_lines: orderLines,
     intent: "buy",
     merchant_reference1: event.transaction.id,
     merchant_reference2: event.sourceObject.id,
@@ -99,8 +103,8 @@ export const TransactionInitializeSessionWebhookHandler = async (
     pspReference: klarnaSession.data.session_id,
     result:
       event.action.actionType === TransactionFlowStrategyEnum.Authorization
-        ? "AUTHORIZATION_REQUEST"
-        : "CHARGE_REQUEST",
+        ? "AUTHORIZATION_ACTION_REQUIRED"
+        : "CHARGE_ACTION_REQUIRED",
     actions: [],
     amount: action.amount,
     message: "",
