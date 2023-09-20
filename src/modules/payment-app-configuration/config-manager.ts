@@ -84,7 +84,6 @@ export const addConfigEntry = async (
   const config = {
     ...newConfigEntry,
     configurationId: uuid,
-    webhookPassword: "",
   } satisfies PaymentAppConfigEntry;
 
   logger.debug({ config: redactLogObject(config) }, "Adding new config entry");

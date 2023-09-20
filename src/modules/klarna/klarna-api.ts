@@ -163,5 +163,10 @@ export const createMerchantConfirmationUrl = (
   return url.toString();
 };
 
-export const calculateTaxRate = (taxAmount: number, netAmount: number) =>
-  getKlarnaIntegerAmountFromSaleor(Math.round((100 * taxAmount) / netAmount));
+export const calculateTaxRate = (taxAmount: number, netAmount: number) => {
+  return getKlarnaIntegerAmountFromSaleor(Math.round((100 * taxAmount) / netAmount));
+};
+
+export const getEnvironmentFromUrl = (url: string) => {
+  return url.includes(".playground.") ? "playground" : "production";
+};

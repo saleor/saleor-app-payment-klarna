@@ -5,6 +5,7 @@ import {
   type FieldPath,
   type FieldValues,
   useController,
+  type PathValue,
 } from "react-hook-form";
 
 type $FormSelectProps = ComponentProps<typeof $Select>;
@@ -25,8 +26,8 @@ export function FormSelect<
       error={!!fieldState.error?.message}
       {...props}
       {...field}
-      onChange={(e) => {
-        field.onChange(e);
+      onChange={(e: { label: string; value: PathValue<TFieldValues, TName> }) => {
+        field.onChange(e.value);
         props.onChange?.(e);
       }}
       onFocus={(e) => {
