@@ -14,6 +14,7 @@ import { obfuscateConfig } from "@/modules/app-configuration/utils";
 import { type JSONObject } from "@/types";
 import { KlarnaHttpClientError } from "@/errors";
 import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
+import { getNormalizedLocale } from "@/backend-lib/api-route-utils";
 
 export const TransactionInitializeSessionWebhookHandler = async (
   event: TransactionInitializeSessionEventFragment,
@@ -54,10 +55,7 @@ export const TransactionInitializeSessionWebhookHandler = async (
 
   const createKlarnaSession = klarnaClient.path("/payments/v1/sessions").method("post").create();
 
-  const locale =
-    event.sourceObject.__typename === "Checkout"
-      ? event.sourceObject.languageCode
-      : event.sourceObject.languageCodeEnum.toString();
+  const locale = getNormalizedLocale(event);
 
   const country = event.sourceObject.billingAddress?.country.code;
   invariant(country, "Missing country code");

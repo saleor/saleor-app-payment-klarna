@@ -87,7 +87,7 @@ export const getLineItems = ({
             shippingPrice.tax.amount,
             shippingPrice.tax.currency,
           ),
-          tax_rate: Math.round((10000 * shippingPrice.tax.amount) / shippingPrice.net.amount),
+          tax_rate: calculateTaxRate(shippingPrice.tax.amount, shippingPrice.net.amount),
         }
       : null;
 
@@ -120,7 +120,7 @@ export const getLineItems = ({
         line.totalPrice.tax.amount,
         line.totalPrice.tax.currency,
       ),
-      tax_rate: Math.round((10000 * line.totalPrice.tax.amount) / line.totalPrice.net.amount),
+      tax_rate: calculateTaxRate(line.totalPrice.tax.amount, line.totalPrice.net.amount),
     };
     return klarnaLineItem;
   });
@@ -162,3 +162,6 @@ export const createMerchantConfirmationUrl = (
   url.searchParams.append("transaction", transactionId);
   return url.toString();
 };
+
+export const calculateTaxRate = (taxAmount: number, netAmount: number) =>
+  getKlarnaIntegerAmountFromSaleor(Math.round((100 * taxAmount) / netAmount));

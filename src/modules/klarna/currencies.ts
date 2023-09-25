@@ -1,4 +1,3 @@
-import { type Money } from "generated/graphql";
 import { invariant } from "@/lib/invariant";
 
 const getDecimalsForKlarna = (currency: string) => {
@@ -15,8 +14,8 @@ const getDecimalsForKlarna = (currency: string) => {
 
 // Some payment methods expect the amount to be in cents (integers)
 // Saleor provides and expects the amount to be in dollars (decimal format / floats)
-export const getKlarnaIntegerAmountFromSaleor = (major: number, currency: string) => {
-  const decimals = getDecimalsForKlarna(currency);
+export const getKlarnaIntegerAmountFromSaleor = (major: number, currency?: string) => {
+  const decimals = currency ? getDecimalsForKlarna(currency) : 2;
   const multiplier = 10 ** decimals;
   return Number.parseInt((major * multiplier).toFixed(0), 10);
 };

@@ -25,7 +25,7 @@ export const TransactionProcessSessionWebhookHandler = async (
   event: TransactionProcessSessionEventFragment,
   saleorApiUrl: string,
 ): Promise<TransactionProcessSessionResponse> => {
-  const logger = createLogger({}, { msgPrefix: "[TransactionInitializeSessionWebhookHandler] " });
+  const logger = createLogger({}, { msgPrefix: "[TransactionProcessSessionWebhookHandler] " });
   const { transaction, action, sourceObject, merchantReference } = event;
   const { id, __typename, channel } = sourceObject;
   const logData = {
