@@ -80,7 +80,6 @@
     "urql": "3.0.4",
     "uuidv7": "0.6.2",
     "vite": "4.4.9",
-    "vitest": "0.34.4",
     "webpack": "5.88.2",
     "yup": "1.2.0",
     "zod": "3.22.2",
@@ -135,7 +134,8 @@
     "setup-polly-jest": "0.11.0",
     "ts-node": "10.9.1",
     "typescript": "5.2.2",
-    "vite-tsconfig-paths": "4.2.1"
+    "vite-tsconfig-paths": "4.2.1",
+    "vitest": "0.34.2"
   },
   "engines": {
     "npm": ">=8.0.0 <10.0.0",
