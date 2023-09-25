@@ -8,11 +8,10 @@ import { testEnv } from "@/__tests__/test-env.mjs";
 export const filledFakeMatadataConfig = {
   configurations: [
     {
-      apiKey: "super-secret-key",
-      apiKeyId: "test-1234",
-      clientKey: "not-so-secret-key",
+      username: testEnv.TEST_KLARNA_USERNAME,
+      password: testEnv.TEST_KLARNA_PASSWORD,
+      apiUrl: testEnv.TEST_KLARNA_API_URL,
       configurationId: "mock-id",
-      webhookPassword: "password",
       configurationName: "test",
     },
   ],
@@ -29,7 +28,7 @@ export const getFilledFakeMetadataConfigurator = (override?: MetadataManagerOver
   );
 };
 
-export const getFilledMetadata = () => {
-  const configurator = getFilledFakeMetadataConfigurator();
+export const getFilledMetadata = (override?: MetadataManagerOverride) => {
+  const configurator = getFilledFakeMetadataConfigurator(override);
   return configurator.getRawConfig();
 };

@@ -16,21 +16,6 @@ import { type PaymentAppConfigurator } from "./payment-app-configuration";
 import { type PaymentAppFormConfigEntry } from "./config-entry";
 import { testEnv } from "@/__tests__/test-env.mjs";
 
-vi.mock("@/modules/adyen-configuration-v2/adyen-key-utils", () => {
-  return {
-    checkAdyenApiKey: () => {
-      return {
-        apiKeyId: "1",
-        companyId: "2",
-        apiKeyUsername: "3",
-        apiKeyScope: "4",
-        merchantAccount: "merchant",
-        clientKey: "5",
-      };
-    },
-  };
-});
-
 const mockConfigurator = {
   getConfig: vi.fn(async () => ({ configurations: [configEntryAll] })),
   getConfigObfuscated: vi.fn(async () => ({
@@ -63,17 +48,18 @@ describe("addConfigEntry", () => {
   it("generates random id for new config entry, saves config entry in configurator, returns new config entry which has obfuscated fields", async () => {
     const input: PaymentAppFormConfigEntry = {
       configurationName: "new-config",
-      apiKey: "new-key",
-      clientKey: "client-key",
+      password: "new-key",
+      username: "client-key",
+      apiUrl: "https://api.playground.klarna.com/",
     };
     const result = await addConfigEntry(input, mockConfigurator);
 
     expect(result).toStrictEqual({
+      apiUrl: "https://api.playground.klarna.com/",
       configurationName: input.configurationName,
-      apiKey: `${OBFUSCATION_DOTS}key`,
-      apiKeyId: "1234", // CHANGEME
+      password: `${OBFUSCATION_DOTS}key`,
       configurationId: expect.any(String),
-      clientKey: expect.any(String),
+      username: expect.any(String),
     });
     expect(mockConfigurator.setConfigEntry).toHaveBeenCalledTimes(1);
   });
@@ -85,8 +71,8 @@ describe("updateConfigEntry", () => {
       configurationId: configEntryAll.configurationId,
       entry: {
         configurationName: "new-name",
-        apiKey: "updated-key",
-        clientKey: configEntryAll.clientKey,
+        password: "updated-password",
+        username: configEntryAll.username,
       },
     } satisfies ConfigEntryUpdate;
 
@@ -109,7 +95,7 @@ describe("updateConfigEntry", () => {
       configurationId: "non-existing-id",
       entry: {
         configurationName: configEntryAll.configurationName,
-        apiKey: "updated-key",
+        password: "updated-key",
       },
     } satisfies ConfigEntryUpdate;
 
