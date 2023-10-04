@@ -33,6 +33,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_SENTRY_DSN: z.optional(z.string().min(1)),
+    NEXT_PUBLIC_SENTRY_ENVIRONMENT: z.enum(["staging", "production", "preview"]).default("preview"),
   },
 
   /*
@@ -56,5 +57,6 @@ export const env = createEnv({
     UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
     REST_APL_ENDPOINT: process.env.REST_APL_ENDPOINT,
     REST_APL_TOKEN: process.env.REST_APL_TOKEN,
+    NEXT_PUBLIC_SENTRY_ENVIRONMENT: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT,
   },
 });
