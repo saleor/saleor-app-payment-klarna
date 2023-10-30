@@ -19,6 +19,11 @@ export default createManifestHandler({
       requiredSaleorVersion: ">=3.15.0",
       homepageUrl: "https://docs.saleor.io/docs/3.x/developer/app-store/apps/klarna",
       supportUrl: "https://github.com/saleor/saleor-app-payment-klarna/issues",
+      brand: {
+        logo: {
+          default: `${context.appBaseUrl}/logo.png`,
+        },
+      },
       webhooks: [
         paymentGatewayInitializeSessionSyncWebhook.getWebhookManifest(context.appBaseUrl),
         transactionInitializeSessionSyncWebhook.getWebhookManifest(context.appBaseUrl),

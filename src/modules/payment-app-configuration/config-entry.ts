@@ -1,9 +1,7 @@
 import { z } from "zod";
 import { deobfuscateValues } from "../app-configuration/utils";
 
-export const DANGEROUS_paymentAppConfigEntryHiddenSchema = z.object({
-  webhookPassword: z.string().min(1).nullish(),
-});
+export const DANGEROUS_paymentAppConfigEntryHiddenSchema = z.object({});
 
 export const paymentAppConfigEntryInternalSchema = z.object({
   configurationId: z.string().min(1),
@@ -47,9 +45,10 @@ export const paymentAppFormConfigEntrySchema = paymentAppConfigEntryEncryptedSch
   .merge(paymentAppConfigEntryPublicSchema)
   .strict()
   .default({
+    configurationName: "",
     username: null,
     password: null,
-    configurationName: "",
+    apiUrl: null,
   });
 
 /** Schema used in front-end forms

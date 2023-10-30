@@ -1,7 +1,6 @@
 // We have to use process.env, otherwise pino doesn't work
 /* eslint-disable node/no-process-env */
 import pino from "pino";
-import { isDevelopment, isTest } from "./isEnv";
 import { isObject } from "./utils";
 import { obfuscateValue } from "@/modules/app-configuration/utils";
 import { BaseError, BaseTrpcError } from "@/errors";
@@ -13,19 +12,24 @@ export const logger = pino({
     paths: [
       "apiKey",
       "*[*].apiKey",
-      // CHANGEME: Add other fields to obfuscate
+      "webhookHmacKey",
+      "*[*].webhookHmacKey",
+      "webhookPassword",
+      "*[*].webhookPassword",
+      "hmac",
+      "[*].hmac",
+      "token",
+      "[*].token",
+      "password",
+      "[*].password",
+      "appToken",
+      "[*].appToken",
+      "refreshToken",
+      "applePayCertificate",
+      "*[*].applePayCertificate",
     ],
     censor: (value) => redactLogValue(value),
   },
-  transport:
-    process.env.CI || isDevelopment() || isTest()
-      ? {
-          target: "pino-pretty",
-          options: {
-            colorize: true,
-          },
-        }
-      : undefined,
 });
 /* c8 ignore stop */
 
