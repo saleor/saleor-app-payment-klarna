@@ -6,6 +6,8 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
+    commit-message:
+      prefix: "[skip ci]"
     directory: "/"
     schedule:
       interval: "daily"

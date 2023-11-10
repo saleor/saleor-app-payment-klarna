@@ -52,8 +52,10 @@ describe("PaymentAppConfigurator", () => {
         configurations: [
           {
             configurationId: "mock-id",
-            apiKey: `${OBFUSCATION_DOTS}-key`, // from super-secret-key
             configurationName: "test",
+            apiUrl: "https://api.playground.klarna.com/",
+            username: "username",
+            password: `${OBFUSCATION_DOTS}word`,
           },
         ],
         channelToConfigurationId: mockConfig.channelToConfigurationId,

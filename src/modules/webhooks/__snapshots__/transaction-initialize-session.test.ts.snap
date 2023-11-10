@@ -1,0 +1,71 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TransactionInitializeSessionWebhookHandler > %p https://api.playground.klarna.com/ > 'Checkout' > should work 1`] = `
+{
+  "klarnaSessionResponse": {
+    "client_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyMzA1ZWJjLWI4MTEtMzYzNy1hYTRjLTY2ZWNhMTg3NGYzZCJ9.eyJzZXNzaW9uX2lkIjoiN2NiOGNkNGEtMTk5Zi01NTUyLWI1OGEtZjc5NTVmYTgwOTAxIiwiYmFzZV91cmwiOiJodHRwczovL2pzLnBsYXlncm91bmQua2xhcm5hLmNvbS9ldS9rcCIsImRlc2lnbiI6ImtsYXJuYSIsImxhbmd1YWdlIjoiZW4iLCJwdXJjaGFzZV9jb3VudHJ5IjoiU0UiLCJlbnZpcm9ubWVudCI6InBsYXlncm91bmQiLCJtZXJjaGFudF9uYW1lIjoiWW91ciBidXNpbmVzcyBuYW1lIiwic2Vzc2lvbl90eXBlIjoiUEFZTUVOVFMiLCJjbGllbnRfZXZlbnRfYmFzZV91cmwiOiJodHRwczovL2V1LnBsYXlncm91bmQua2xhcm5hZXZ0LmNvbSIsInNjaGVtZSI6dHJ1ZSwiZXhwZXJpbWVudHMiOlt7Im5hbWUiOiJrcGMtMWstc2VydmljZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3BjLVBTRUwtMzA5OSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXBvcHVwLXJldHJpYWJsZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXN0YXRpYy13aWRnZXQiLCJ2YXJpYXRlIjoiaW5kZXgiLCJwYXJhbWV0ZXJzIjp7ImR5bmFtaWMiOiJ0cnVlIn19LHsibmFtZSI6ImtwLWNsaWVudC1vbmUtcHVyY2hhc2UtZmxvdyIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJpbi1hcHAtc2RrLW5ldy1pbnRlcm5hbC1icm93c2VyIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoibmV3LWludGVybmFsLWJyb3dzZXItZW5hYmxlIn19LHsibmFtZSI6ImtwLWNsaWVudC11dG9waWEtc2RrLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS13ZWJ2aWV3LWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoiaW4tYXBwLXNkay1jYXJkLXNjYW5uaW5nIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoiY2FyZC1zY2FubmluZy1lbmFibGUifX1dLCJyZWdpb24iOiJldSIsIm9yZGVyX2Ftb3VudCI6MjIyOTksIm9mZmVyaW5nX29wdHMiOjIsIm9vIjoiNXUiLCJ2ZXJzaW9uIjoidjEuMTAuMC0xNTkwLWczZWJjMzkwNyJ9.O8nqFq5JmRzMe9MQuEemgnBDS0dDjRB72E0m37BD_28b_FgelBQL04A36nGKAPIRdelo-0ls4HqiEbpyMgz1TXgYnt03byAFuqirVlLiODzknKkayO-cUacSVrae-GG9GJHnxfwiLM6lUbPbyEBCq2tud1ymsEg9Tn40yPwEIHKlDIuLvj8MsO8CGn20abpyN5RzEg8682pElZS4sksR8ipDJZbZZMc1iw-9xtffn8fC-naMYWaz_7E8Jl9_O7h5PQ9grOhjrbE3PkJuZhKFxIlb5l_zieZjOZsoSbwbJz0qjNryel9ExkM_1b6A-SRVLZN_BmHZ3ZkUHwiziaVcVA",
+    "payment_method_categories": [
+      {
+        "asset_urls": {
+          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+        },
+        "identifier": "pay_over_time",
+        "name": "Monthly financing",
+      },
+      {
+        "asset_urls": {
+          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+        },
+        "identifier": "pay_now",
+        "name": "Direct debit",
+      },
+      {
+        "asset_urls": {
+          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+        },
+        "identifier": "pay_later",
+        "name": "Buy now, pay later",
+      },
+    ],
+    "session_id": "7cb8cd4a-199f-5552-b58a-f7955fa80901",
+  },
+}
+`;
+
+exports[`TransactionInitializeSessionWebhookHandler > %p https://api.playground.klarna.com/ > 'Order' > should work 1`] = `
+{
+  "klarnaSessionResponse": {
+    "client_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyMzA1ZWJjLWI4MTEtMzYzNy1hYTRjLTY2ZWNhMTg3NGYzZCJ9.eyJzZXNzaW9uX2lkIjoiOGFiN2U5NjMtMTNiYS01ZjgyLTgyNDAtMzNmZDNlMTM3NzM2IiwiYmFzZV91cmwiOiJodHRwczovL2pzLnBsYXlncm91bmQua2xhcm5hLmNvbS9ldS9rcCIsImRlc2lnbiI6ImtsYXJuYSIsImxhbmd1YWdlIjoiZW4iLCJwdXJjaGFzZV9jb3VudHJ5IjoiU0UiLCJlbnZpcm9ubWVudCI6InBsYXlncm91bmQiLCJtZXJjaGFudF9uYW1lIjoiWW91ciBidXNpbmVzcyBuYW1lIiwic2Vzc2lvbl90eXBlIjoiUEFZTUVOVFMiLCJjbGllbnRfZXZlbnRfYmFzZV91cmwiOiJodHRwczovL2V1LnBsYXlncm91bmQua2xhcm5hZXZ0LmNvbSIsInNjaGVtZSI6dHJ1ZSwiZXhwZXJpbWVudHMiOlt7Im5hbWUiOiJrcGMtMWstc2VydmljZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3BjLVBTRUwtMzA5OSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXBvcHVwLXJldHJpYWJsZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXN0YXRpYy13aWRnZXQiLCJ2YXJpYXRlIjoiaW5kZXgiLCJwYXJhbWV0ZXJzIjp7ImR5bmFtaWMiOiJ0cnVlIn19LHsibmFtZSI6ImtwLWNsaWVudC1vbmUtcHVyY2hhc2UtZmxvdyIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJpbi1hcHAtc2RrLW5ldy1pbnRlcm5hbC1icm93c2VyIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoibmV3LWludGVybmFsLWJyb3dzZXItZW5hYmxlIn19LHsibmFtZSI6ImtwLWNsaWVudC11dG9waWEtc2RrLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS13ZWJ2aWV3LWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoiaW4tYXBwLXNkay1jYXJkLXNjYW5uaW5nIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoiY2FyZC1zY2FubmluZy1lbmFibGUifX1dLCJyZWdpb24iOiJldSIsIm9yZGVyX2Ftb3VudCI6MjIyOTksIm9mZmVyaW5nX29wdHMiOjIsIm9vIjoiNXUiLCJ2ZXJzaW9uIjoidjEuMTAuMC0xNTkwLWczZWJjMzkwNyJ9.TJ0AwZrHivBbbJP970EnUtQHbS_JOHbVAtrGC3Ie1DLb8aq6tDs8QKAb0VZE1IQG41fU7F_xzHNVLqH-g09innLoOSnHYekE7ScaOQzpwmQN5bRl_4guIM-7GJxGZDICDH737bXjh4xi7TgDkzeMFkSTal_BYFzkT0ZT24r0WQWcWgxjEfC8X_g1_rgXTkXJVjXrWykFLIjdU_1F98imsOObS5AVNtXjiQwEraK801JeiMCIm6g9GZscwWMpXaxIw0XWmkSGndUzWMFiYnOsSEkkJJpYcTOnMTkxHvTANC61HEcTPzmHgbrTINxfWIBYwfwv-2gt5Ba8Z2cMJ_o8aw",
+    "payment_method_categories": [
+      {
+        "asset_urls": {
+          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+        },
+        "identifier": "pay_over_time",
+        "name": "Monthly financing",
+      },
+      {
+        "asset_urls": {
+          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+        },
+        "identifier": "pay_now",
+        "name": "Direct debit",
+      },
+      {
+        "asset_urls": {
+          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+        },
+        "identifier": "pay_later",
+        "name": "Buy now, pay later",
+      },
+    ],
+    "session_id": "8ab7e963-13ba-5f82-8240-33fd3e137736",
+  },
+}
+`;

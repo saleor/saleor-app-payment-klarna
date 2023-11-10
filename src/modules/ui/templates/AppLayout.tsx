@@ -7,7 +7,7 @@ export const AppLayout = ({
   description,
   children,
 }: {
-  title: string;
+  title: ReactNode;
   description?: ReactNode;
   children: ReactNode;
 }) => {
@@ -22,9 +22,13 @@ export const AppLayout = ({
       __paddingBottom="20rem"
     >
       <Box display="flex" flexDirection="column" rowGap={2}>
-        <Text as="h1" variant="hero" size="medium">
-          {title}
-        </Text>
+        {isValidElement(title) ? (
+          title
+        ) : (
+          <Text as="h1" variant="hero" size="medium">
+            {title}
+          </Text>
+        )}
         {isValidElement(description) ? (
           description
         ) : (

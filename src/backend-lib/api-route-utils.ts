@@ -15,6 +15,7 @@ import {
 } from "@/errors";
 import { toStringOrEmpty } from "@/lib/utils";
 import { saleorApp } from "@/saleor-app";
+import { type TransactionInitializeSessionEventFragment } from "generated/graphql";
 
 export const parseJsonRequest = async <S extends ValidateFunction>(req: Request, validate: S) => {
   type Result = S extends ValidateFunction<infer T> ? T : never;
@@ -157,4 +158,10 @@ export const getAuthDataForRequest = async (request: NextApiRequest) => {
   }
 
   return authData;
+};
+
+export const getNormalizedLocale = (event: TransactionInitializeSessionEventFragment) => {
+  return event.sourceObject.__typename === "Checkout"
+    ? event.sourceObject.languageCode
+    : event.sourceObject.languageCodeEnum.toString();
 };

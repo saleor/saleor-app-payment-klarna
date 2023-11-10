@@ -10,13 +10,16 @@ vi.mock("@saleor/app-sdk/app-bridge", () => {
     }),
   };
 });
+vi.mock("next/router", () => ({
+  useRouter: () => ({
+    replace: vi.fn(),
+  }),
+}));
 
 describe("App", () => {
   it("renders text", () => {
     render(<IndexPage />);
 
-    expect(
-      screen.getByText("Install this app in your Dashboard", { exact: false }),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Add to Saleor", { exact: false })).toBeInTheDocument();
   });
 });

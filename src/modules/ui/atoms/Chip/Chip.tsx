@@ -15,6 +15,13 @@ export const ChipDanger = ({ children }: { children: ReactNode }) => (
     </Text>
   </Chip>
 );
+export const ChipKlarnaOrange = ({ children }: { children: ReactNode }) => (
+  <Chip size="medium" __backgroundColor="rgb(255, 237, 189)">
+    <Text __color="black" size="small" variant="caption">
+      {children}
+    </Text>
+  </Chip>
+);
 export const ChipSuccess = ({ children }: { children: ReactNode }) => (
   <Chip size="medium" backgroundColor="decorativeSurfaceSubdued2" borderColor="neutralHighlight">
     <Text color="text2Decorative" size="small" variant="caption">
