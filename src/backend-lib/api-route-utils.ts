@@ -62,7 +62,10 @@ export const validateData = async <S extends ValidateFunction>(data: unknown, va
 
 export function getSyncWebhookHandler<TPayload, TResult, TSchema extends ValidateFunction<TResult>>(
   name: string,
-  webhookHandler: (payload: TPayload, saleorApiUrl: string) => Promise<TResult>,
+  webhookHandler: (
+    payload: TPayload,
+    params: { saleorApiUrl: string; baseUrl: string },
+  ) => Promise<TResult>,
   ResponseSchema: TSchema,
   errorMapper: (payload: TPayload, errorResponse: ErrorResponse) => TResult & {},
 ): NextWebhookApiHandler<TPayload> {
@@ -73,12 +76,15 @@ export function getSyncWebhookHandler<TPayload, TResult, TSchema extends Validat
       },
       { msgPrefix: `[${name}] ` },
     );
-    const { authData, payload } = ctx;
+    const { authData, baseUrl, payload } = ctx;
     logger.info(`handler called: ${webhookHandler.name}`);
     logger.debug({ payload }, "ctx payload");
 
     try {
-      const result = await webhookHandler(payload, authData.saleorApiUrl);
+      const result = await webhookHandler(payload, {
+        saleorApiUrl: authData.saleorApiUrl,
+        baseUrl,
+      });
       logger.info(`${webhookHandler.name} was successful`);
       logger.debug({ result }, "Sending successful response");
       return res.json(await validateData(result, ResponseSchema));

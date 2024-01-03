@@ -5,15 +5,19 @@ import packageJson from "../../../package.json";
 import { paymentGatewayInitializeSessionSyncWebhook } from "./webhooks/saleor/payment-gateway-initialize-session";
 import { transactionInitializeSessionSyncWebhook } from "./webhooks/saleor/transaction-initialize-session";
 import { transactionProcessSessionSyncWebhook } from "./webhooks/saleor/transaction-process-session";
+import { env } from "@/lib/env.mjs";
 
 export default createManifestHandler({
-  async manifestFactory(context) {
+  async manifestFactory({ appBaseUrl }) {
+    const iframeBaseUrl = env.APP_IFRAME_BASE_URL ?? appBaseUrl;
+    const apiBaseURL = env.APP_API_BASE_URL ?? appBaseUrl;
+
     const manifest: AppManifest = {
       id: "app.saleor.klarna",
       name: "Klarna",
       about: packageJson.description,
-      tokenTargetUrl: `${context.appBaseUrl}/api/register`,
-      appUrl: context.appBaseUrl,
+      tokenTargetUrl: `${apiBaseURL}/api/register`,
+      appUrl: iframeBaseUrl,
       permissions: ["HANDLE_PAYMENTS"],
       version: packageJson.version,
       requiredSaleorVersion: ">=3.15.0",
@@ -21,13 +25,13 @@ export default createManifestHandler({
       supportUrl: "https://github.com/saleor/saleor-app-payment-klarna/issues",
       brand: {
         logo: {
-          default: `${context.appBaseUrl}/logo.png`,
+          default: `${apiBaseURL}/logo.png`,
         },
       },
       webhooks: [
-        paymentGatewayInitializeSessionSyncWebhook.getWebhookManifest(context.appBaseUrl),
-        transactionInitializeSessionSyncWebhook.getWebhookManifest(context.appBaseUrl),
-        transactionProcessSessionSyncWebhook.getWebhookManifest(context.appBaseUrl),
+        paymentGatewayInitializeSessionSyncWebhook.getWebhookManifest(apiBaseURL),
+        transactionInitializeSessionSyncWebhook.getWebhookManifest(apiBaseURL),
+        transactionProcessSessionSyncWebhook.getWebhookManifest(apiBaseURL),
       ],
       extensions: [],
     };
