@@ -23,7 +23,7 @@ import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
 
 export const TransactionProcessSessionWebhookHandler = async (
   event: TransactionProcessSessionEventFragment,
-  { saleorApiUrl }: { saleorApiUrl: string; baseUrl: string },
+  { saleorApiUrl }: { saleorApiUrl: string },
 ): Promise<TransactionProcessSessionResponse> => {
   const logger = createLogger({}, { msgPrefix: "[TransactionProcessSessionWebhookHandler] " });
   const { transaction, action, sourceObject, merchantReference } = event;

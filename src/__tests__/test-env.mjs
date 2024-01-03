@@ -12,6 +12,8 @@ const testEnvSchema = z.object({
   TEST_KLARNA_API_URL: z.string(),
   // Polly.js
   POLLY_MODE: z.enum(["record", "record_missing", "replay"]).optional().default("replay"),
+
+  APP_API_BASE_URL: z.string().url(),
 });
 
 const processEnv = {
@@ -26,6 +28,8 @@ const processEnv = {
   TEST_KLARNA_API_URL: process.env.TEST_KLARNA_API_URL,
   // Polly.js
   POLLY_MODE: process.env.POLLY_MODE,
+
+  APP_API_BASE_URL: process.env.APP_API_BASE_URL,
 };
 
 /* c8 ignore start */

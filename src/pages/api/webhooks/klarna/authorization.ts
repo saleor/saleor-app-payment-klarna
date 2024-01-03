@@ -11,6 +11,7 @@ import {
   getKlarnaApiClient,
   getLineItems,
   prepareRequestAddress,
+  getEnvironmentFromUrl,
 } from "@/modules/klarna/klarna-api";
 import { createLogger } from "@/lib/logger";
 import { KlarnaHttpClientError } from "@/errors";
@@ -21,7 +22,6 @@ import {
   GetTransactionByIdDocument,
   type GetTransactionByIdQuery,
   type GetTransactionByIdQueryVariables,
-  TransactionActionEnum,
   TransactionEventReportDocument,
   TransactionEventTypeEnum,
 } from "generated/graphql";
@@ -142,16 +142,28 @@ export default async function KlarnaAuthorizationWebhookHandler(
     throw new KlarnaHttpClientError(klarnaOrder.statusText, { errors: [klarnaOrder.data] });
   }
 
+  const klarnaMerchantId = klarnaConfig.username.split("_")[0];
+  const klarnaEnv = getEnvironmentFromUrl(klarnaConfig.apiUrl);
+
+  const klarnaDashboardHost =
+    klarnaEnv === "playground"
+      ? "https://portal.playground.klarna.com"
+      : "https://portal.klarna.com";
+  const externalUrl =
+    klarnaDashboardHost +
+    `/orders/all/merchants/${klarnaMerchantId}/orders/${klarnaOrder.data.order_id}`;
+
   await client
     .mutation(TransactionEventReportDocument, {
       transactionId,
       amount: sourceObject.total.gross.amount,
 
-      availableActions:
-        klarnaOrder.data.fraud_status === "ACCEPTED"
-          ? [TransactionActionEnum.Refund]
-          : [TransactionActionEnum.Cancel],
-      externalUrl: "",
+      availableActions: [],
+      // @todo uncomment when refund and cancel are implemented
+      // klarnaOrder.data.fraud_status === "ACCEPTED"
+      //   ? [TransactionActionEnum.Refund]
+      //   : [TransactionActionEnum.Cancel],
+      externalUrl,
       time: new Date().toISOString(),
       type:
         klarnaOrder.data.fraud_status === "ACCEPTED"

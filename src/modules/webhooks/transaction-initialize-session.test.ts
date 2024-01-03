@@ -69,7 +69,7 @@ describe("TransactionInitializeSessionWebhookHandler", () => {
         });
         const initializeResult = await TransactionInitializeSessionWebhookHandler(event, {
           saleorApiUrl: testEnv.TEST_SALEOR_API_URL,
-          baseUrl: "https://klarna.saleor.app",
+          baseUrl: testEnv.APP_API_BASE_URL,
         });
         expect(initializeResult.data?.klarnaSessionResponse).toMatchObject({
           client_token: expect.any(String),
@@ -172,7 +172,7 @@ describe("TransactionInitializeSessionWebhookHandler", () => {
         });
         const initializeResult = await TransactionInitializeSessionWebhookHandler(event, {
           saleorApiUrl: testEnv.TEST_SALEOR_API_URL,
-          baseUrl: "https://klarna.saleor.app",
+          baseUrl: testEnv.APP_API_BASE_URL,
         });
         expect(initializeResult.data?.klarnaSessionResponse).toMatchObject({
           client_token: expect.any(String),

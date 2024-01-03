@@ -62,7 +62,7 @@ describe("api-route-utils", () => {
       const authData = {
         saleorApiUrl: testEnv.TEST_SALEOR_API_URL,
       };
-      const baseUrl = "https://klarna.saleor.app";
+      const baseUrl = testEnv.APP_API_BASE_URL;
 
       await webhookHandler(
         {} as NextApiRequest,
