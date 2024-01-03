@@ -55,6 +55,7 @@ jobs:
           TEST_SALEOR_APP_ID: ${{ vars.TEST_SALEOR_APP_ID }}
           TEST_SALEOR_JWKS: ${{ vars.TEST_SALEOR_JWKS }}
           TEST_KLARNA_API_URL: ${{ vars.TEST_KLARNA_API_URL }} # https://api.playground.klarna.com/
+          APP_API_BASE_URL: https://klarna.saleor.app
 
       - name: Dependency cruiser
         if: ${{ github.event_name != 'push' }}
