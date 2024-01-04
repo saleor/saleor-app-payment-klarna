@@ -73,7 +73,7 @@ jobs:
 
       - name: Coverage report
         if: ${{ github.event_name != 'push' }}
-        uses: ArtiomTr/jest-coverage-report-action@v2.2.5
+        uses: ArtiomTr/jest-coverage-report-action@v2.2.6
         with:
           skip-step: all
           coverage-file: coverage/report.json
