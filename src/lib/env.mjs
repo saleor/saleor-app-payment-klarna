@@ -24,6 +24,8 @@ export const env = createEnv({
     UPSTASH_TOKEN: z.string().optional(),
     REST_APL_ENDPOINT: z.string().optional(),
     REST_APL_TOKEN: z.string().optional(),
+    APP_API_BASE_URL: z.string().optional(),
+    APP_IFRAME_BASE_URL: z.string().optional(),
   },
 
   /*
@@ -56,5 +58,7 @@ export const env = createEnv({
     UPSTASH_TOKEN: process.env.UPSTASH_TOKEN,
     REST_APL_ENDPOINT: process.env.REST_APL_ENDPOINT,
     REST_APL_TOKEN: process.env.REST_APL_TOKEN,
+    APP_API_BASE_URL: process.env.APP_API_BASE_URL,
+    APP_IFRAME_BASE_URL: process.env.APP_IFRAME_BASE_URL,
   },
 });

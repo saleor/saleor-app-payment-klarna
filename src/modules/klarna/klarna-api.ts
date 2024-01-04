@@ -47,6 +47,7 @@ export const getKlarnaApiClient = ({
     use: [
       (url, init, next) =>
         next(url, init).catch((err) => {
+          console.error(err);
           if (err instanceof ApiError) {
             throw new KlarnaHttpClientError(err.statusText, { errors: [err.data] });
           } else {

@@ -10857,6 +10857,13 @@ type TransactionItem implements Node & ObjectWithMetadata @doc(category: "Paymen
   """
   order: Order
 
+  """
+  The related checkout.
+  
+  Added in Saleor 3.14.
+  """
+  checkout: Checkout
+
   """List of all transaction's events."""
   events: [TransactionEvent!]!
 
@@ -11338,6 +11345,20 @@ type Fulfillment implements Node & ObjectWithMetadata @doc(category: "Orders") {
 
   """Warehouse from fulfillment was fulfilled."""
   warehouse: Warehouse
+
+  """
+  Amount of refunded shipping price.
+  
+  Added in Saleor 3.14.
+  """
+  shippingRefundedAmount: Money
+
+  """
+  Total refunded amount assigned to this fulfillment.
+  
+  Added in Saleor 3.14.
+  """
+  totalRefundedAmount: Money
 }
 
 """An enumeration."""
@@ -11448,6 +11469,9 @@ type OrderLine implements Node & ObjectWithMetadata @doc(category: "Orders") {
   """Price of the order line."""
   totalPrice: TaxedMoney!
 
+  """Price of the order line without discounts."""
+  undiscountedTotalPrice: TaxedMoney!
+
   """
   A purchased product variant. Note: this field may be null if the variant has been removed from stock at all. Requires one of the following permissions to include the unpublished items: MANAGE_ORDERS, MANAGE_DISCOUNTS, MANAGE_PRODUCTS.
   """
@@ -11465,6 +11489,13 @@ type OrderLine implements Node & ObjectWithMetadata @doc(category: "Orders") {
   Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS.
   """
   allocations: [Allocation!]
+
+  """
+  Denormalized sale ID, set when order line is created for a product variant that is on sale.
+  
+  Added in Saleor 3.14.
+  """
+  saleId: ID
 
   """
   A quantity of items remaining to be fulfilled.
@@ -11505,6 +11536,13 @@ type OrderLine implements Node & ObjectWithMetadata @doc(category: "Orders") {
   Added in Saleor 3.9.
   """
   taxClassPrivateMetadata: [MetadataItem!]!
+
+  """
+  Voucher code that was used for this order line.
+  
+  Added in Saleor 3.14.
+  """
+  voucherCode: String
 }
 
 """
@@ -11824,6 +11862,20 @@ type Payment implements Node & ObjectWithMetadata @doc(category: "Payments") {
 
   """The details of the card used for this payment."""
   creditCard: CreditCard
+
+  """
+  Informs whether this is a partial payment.
+  
+  Added in Saleor 3.14.
+  """
+  partial: Boolean!
+
+  """
+  PSP reference of the payment.
+  
+  Added in Saleor 3.14.
+  """
+  pspReference: String
 }
 
 """An object representing a single payment."""
@@ -12298,6 +12350,13 @@ type TransactionEvent implements Node @doc(category: "Payments") {
   Added in Saleor 3.13.
   """
   createdBy: UserOrApp
+
+  """
+  Idempotency key assigned to the event.
+  
+  Added in Saleor 3.14.
+  """
+  idempotencyKey: String
 }
 
 """
@@ -14261,7 +14320,7 @@ type Mutation {
   ): TaxExemptionManage @doc(category: "Taxes")
 
   """
-  Updates stocks for a given variant and warehouse.
+  Updates stocks for a given variant and warehouse. Variant and warehouse selectors have to be the same for all stock inputs. Is not allowed to use 'variantId' in one input and 'variantExternalReference' in another.
   
   Added in Saleor 3.13.
   
@@ -15547,6 +15606,13 @@ type Mutation {
 
     """The ID of the checkout or order."""
     id: ID!
+
+    """
+    The idempotency key assigned to the action. It will be passed to the payment app to discover potential duplicate actions. If not provided, the default one will be generated. If empty string provided, INVALID error code will be raised.
+    
+    Added in Saleor 3.14.
+    """
+    idempotencyKey: String
 
     """Payment gateway used to initialize the transaction."""
     paymentGateway: PaymentGatewayToInitialize!
@@ -19423,7 +19489,7 @@ enum TaxExemptionManageErrorCode @doc(category: "Taxes") {
 }
 
 """
-Updates stocks for a given variant and warehouse.
+Updates stocks for a given variant and warehouse. Variant and warehouse selectors have to be the same for all stock inputs. Is not allowed to use 'variantId' in one input and 'variantExternalReference' in another.
 
 Added in Saleor 3.13.
 
@@ -22049,6 +22115,7 @@ enum ProductVariantBulkErrorCode @doc(category: "Products") {
   REQUIRED
   UNIQUE
   PRODUCT_NOT_ASSIGNED_TO_CHANNEL
+  STOCK_ALREADY_EXISTS
 }
 
 type BulkProductError @doc(category: "Products") {
@@ -23091,6 +23158,7 @@ enum TransactionInitializeErrorCode @doc(category: "Payments") {
   GRAPHQL_ERROR
   INVALID
   NOT_FOUND
+  UNIQUE
 }
 
 """
@@ -32955,6 +33023,13 @@ type TransactionInitializeSession implements Event @doc(category: "Payments") {
 
   """Action to proceed for the transaction"""
   action: TransactionProcessAction!
+
+  """
+  Idempotency key assigned to the transaction initialize.
+  
+  Added in Saleor 3.14.
+  """
+  idempotencyKey: String!
 }
 
 type TransactionProcessAction @doc(category: "Payments") {

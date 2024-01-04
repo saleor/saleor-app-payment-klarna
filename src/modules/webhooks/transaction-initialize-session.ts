@@ -8,18 +8,26 @@ import { createLogger } from "@/lib/logger";
 import { getConfigurationForChannel } from "@/modules/payment-app-configuration/payment-app-configuration";
 import { getWebhookPaymentAppConfigurator } from "@/modules/payment-app-configuration/payment-app-configuration-factory";
 import { paymentAppFullyConfiguredEntrySchema } from "@/modules/payment-app-configuration/config-entry";
-import { getLineItems, getKlarnaApiClient, type KlarnaMetadata } from "@/modules/klarna/klarna-api";
+import {
+  getLineItems,
+  getKlarnaApiClient,
+  type KlarnaMetadata,
+  prepareRequestAddress,
+} from "@/modules/klarna/klarna-api";
 import { type components } from "generated/klarna";
 import { obfuscateConfig } from "@/modules/app-configuration/utils";
 import { type JSONObject } from "@/types";
 import { KlarnaHttpClientError } from "@/errors";
 import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
 import { getNormalizedLocale } from "@/backend-lib/api-route-utils";
+import { env } from "@/lib/env.mjs";
 
 export const TransactionInitializeSessionWebhookHandler = async (
   event: TransactionInitializeSessionEventFragment,
-  saleorApiUrl: string,
+  { saleorApiUrl, baseUrl }: { saleorApiUrl: string; baseUrl: string },
 ): Promise<TransactionInitializeSessionResponse> => {
+  const appBaseUrl = env.APP_API_BASE_URL ?? baseUrl;
+
   const logger = createLogger(
     { saleorApiUrl },
     { msgPrefix: "[TransactionInitializeSessionWebhookHandler] " },
@@ -73,10 +81,19 @@ export const TransactionInitializeSessionWebhookHandler = async (
   const orderLines = getLineItems(event.sourceObject);
   const orderTaxAmount = orderLines.reduce((acc, line) => acc + (line.total_tax_amount ?? 0), 0);
 
+  const authorizationCallbackUrl = new URL(appBaseUrl);
+  authorizationCallbackUrl.pathname = "/api/webhooks/klarna/authorization";
+  authorizationCallbackUrl.searchParams.set("transactionId", transactionId);
+  authorizationCallbackUrl.searchParams.set("channelId", channelId);
+  authorizationCallbackUrl.searchParams.set("saleorApiUrl", saleorApiUrl);
+
+  const email = sourceObject.userEmail;
   const createKlarnaSessionPayload: components["schemas"]["session_create"] = {
     locale: locale.split("_")[0],
     purchase_country: country,
     purchase_currency: event.action.currency,
+    billing_address: prepareRequestAddress(sourceObject.billingAddress, email),
+    shipping_address: prepareRequestAddress(sourceObject.shippingAddress, email),
     order_amount: getKlarnaIntegerAmountFromSaleor(event.action.amount, event.action.currency),
     order_tax_amount: orderTaxAmount,
     order_lines: orderLines,
@@ -84,7 +101,11 @@ export const TransactionInitializeSessionWebhookHandler = async (
     merchant_reference1: event.transaction.id,
     merchant_reference2: event.sourceObject.id,
     merchant_data: JSON.stringify(metadata),
+    merchant_urls: {
+      authorization: authorizationCallbackUrl.toString(),
+    },
   };
+  logger.info(authorizationCallbackUrl.toString());
   logger.debug({ ...obfuscateConfig(createKlarnaSessionPayload) }, "createKlarnaSession payload");
 
   const klarnaSession = await createKlarnaSession(createKlarnaSessionPayload);

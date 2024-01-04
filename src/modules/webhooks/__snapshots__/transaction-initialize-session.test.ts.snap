@@ -3,8 +3,16 @@
 exports[`TransactionInitializeSessionWebhookHandler > %p https://api.playground.klarna.com/ > 'Checkout' > should work 1`] = `
 {
   "klarnaSessionResponse": {
-    "client_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyMzA1ZWJjLWI4MTEtMzYzNy1hYTRjLTY2ZWNhMTg3NGYzZCJ9.eyJzZXNzaW9uX2lkIjoiN2NiOGNkNGEtMTk5Zi01NTUyLWI1OGEtZjc5NTVmYTgwOTAxIiwiYmFzZV91cmwiOiJodHRwczovL2pzLnBsYXlncm91bmQua2xhcm5hLmNvbS9ldS9rcCIsImRlc2lnbiI6ImtsYXJuYSIsImxhbmd1YWdlIjoiZW4iLCJwdXJjaGFzZV9jb3VudHJ5IjoiU0UiLCJlbnZpcm9ubWVudCI6InBsYXlncm91bmQiLCJtZXJjaGFudF9uYW1lIjoiWW91ciBidXNpbmVzcyBuYW1lIiwic2Vzc2lvbl90eXBlIjoiUEFZTUVOVFMiLCJjbGllbnRfZXZlbnRfYmFzZV91cmwiOiJodHRwczovL2V1LnBsYXlncm91bmQua2xhcm5hZXZ0LmNvbSIsInNjaGVtZSI6dHJ1ZSwiZXhwZXJpbWVudHMiOlt7Im5hbWUiOiJrcGMtMWstc2VydmljZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3BjLVBTRUwtMzA5OSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXBvcHVwLXJldHJpYWJsZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXN0YXRpYy13aWRnZXQiLCJ2YXJpYXRlIjoiaW5kZXgiLCJwYXJhbWV0ZXJzIjp7ImR5bmFtaWMiOiJ0cnVlIn19LHsibmFtZSI6ImtwLWNsaWVudC1vbmUtcHVyY2hhc2UtZmxvdyIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJpbi1hcHAtc2RrLW5ldy1pbnRlcm5hbC1icm93c2VyIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoibmV3LWludGVybmFsLWJyb3dzZXItZW5hYmxlIn19LHsibmFtZSI6ImtwLWNsaWVudC11dG9waWEtc2RrLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS13ZWJ2aWV3LWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoiaW4tYXBwLXNkay1jYXJkLXNjYW5uaW5nIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoiY2FyZC1zY2FubmluZy1lbmFibGUifX1dLCJyZWdpb24iOiJldSIsIm9yZGVyX2Ftb3VudCI6MjIyOTksIm9mZmVyaW5nX29wdHMiOjIsIm9vIjoiNXUiLCJ2ZXJzaW9uIjoidjEuMTAuMC0xNTkwLWczZWJjMzkwNyJ9.O8nqFq5JmRzMe9MQuEemgnBDS0dDjRB72E0m37BD_28b_FgelBQL04A36nGKAPIRdelo-0ls4HqiEbpyMgz1TXgYnt03byAFuqirVlLiODzknKkayO-cUacSVrae-GG9GJHnxfwiLM6lUbPbyEBCq2tud1ymsEg9Tn40yPwEIHKlDIuLvj8MsO8CGn20abpyN5RzEg8682pElZS4sksR8ipDJZbZZMc1iw-9xtffn8fC-naMYWaz_7E8Jl9_O7h5PQ9grOhjrbE3PkJuZhKFxIlb5l_zieZjOZsoSbwbJz0qjNryel9ExkM_1b6A-SRVLZN_BmHZ3ZkUHwiziaVcVA",
+    "client_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyMzA1ZWJjLWI4MTEtMzYzNy1hYTRjLTY2ZWNhMTg3NGYzZCJ9.eyJzZXNzaW9uX2lkIjoiOGViOGUyNmUtMDFhNy01NmVlLWI4NDctM2FkZDI0MzM0NWY5IiwiYmFzZV91cmwiOiJodHRwczovL2pzLnBsYXlncm91bmQua2xhcm5hLmNvbS9ldS9rcCIsImRlc2lnbiI6ImtsYXJuYSIsImxhbmd1YWdlIjoiZW4iLCJwdXJjaGFzZV9jb3VudHJ5IjoiU0UiLCJlbnZpcm9ubWVudCI6InBsYXlncm91bmQiLCJtZXJjaGFudF9uYW1lIjoiWW91ciBidXNpbmVzcyBuYW1lIiwic2Vzc2lvbl90eXBlIjoiUEFZTUVOVFMiLCJjbGllbnRfZXZlbnRfYmFzZV91cmwiOiJodHRwczovL2V1LnBsYXlncm91bmQua2xhcm5hZXZ0LmNvbSIsInNjaGVtZSI6dHJ1ZSwiZXhwZXJpbWVudHMiOlt7Im5hbWUiOiJrcC1jbGllbnQtb25lLXB1cmNoYXNlLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3BjLTFrLXNlcnZpY2UiLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS1mbG93IiwidmFyaWF0ZSI6InZhcmlhdGUtMSJ9LHsibmFtZSI6ImtwYy1QU0VMLTMwOTkiLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS1zdGF0aWMtd2lkZ2V0IiwidmFyaWF0ZSI6ImluZGV4IiwicGFyYW1ldGVycyI6eyJkeW5hbWljIjoidHJ1ZSJ9fSx7Im5hbWUiOiJpbi1hcHAtc2RrLW5ldy1pbnRlcm5hbC1icm93c2VyIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoibmV3LWludGVybmFsLWJyb3dzZXItZW5hYmxlIn19LHsibmFtZSI6ImtwLWNsaWVudC11dG9waWEtc2RrLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS13ZWJ2aWV3LWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoiaW4tYXBwLXNkay1jYXJkLXNjYW5uaW5nIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoiY2FyZC1zY2FubmluZy1lbmFibGUifX1dLCJyZWdpb24iOiJldSIsIm9yZGVyX2Ftb3VudCI6MjIyOTksIm9mZmVyaW5nX29wdHMiOjIsIm9vIjoiZDIiLCJ2ZXJzaW9uIjoidjEuMTAuMC0xNTkwLWczZWJjMzkwNyJ9.VlOMSkDst-VQR7UFSOStK3MvLBPsNbgaLxVimuayj1b1wGrygbXaozyit48nld8VCzAvowD7Hz8WioOu5irT5PJhmpbopOT0sR0N4zaNlwrice8a2ZX42xEy72scepW1lGNPP3ssIZ1jjxncOjNgm3UTV38Yn4rxmoLJJWgxSxAaKxZNm1ExLjkfVd84Q2oblk3WZ5ma6merDrLLt6EjvkvFQ4ZYxHbns_WmuVxDNXtK0kBPFoTX2-zbl22al2Hl5vK8kvjKJm6-KdirGE68qnI2tlOtOaIyNZartGvXINpaju8NLFAQH_YTPjCbgZHYnXdnmkrtc_4y3WqPwqP4zw",
     "payment_method_categories": [
+      {
+        "asset_urls": {
+          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+        },
+        "identifier": "pay_later",
+        "name": "Buy now, pay later",
+      },
       {
         "asset_urls": {
           "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
@@ -19,18 +27,10 @@ exports[`TransactionInitializeSessionWebhookHandler > %p https://api.playground.
           "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
         },
         "identifier": "pay_now",
-        "name": "Direct debit",
-      },
-      {
-        "asset_urls": {
-          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
-          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
-        },
-        "identifier": "pay_later",
-        "name": "Buy now, pay later",
+        "name": "Pay now",
       },
     ],
-    "session_id": "7cb8cd4a-199f-5552-b58a-f7955fa80901",
+    "session_id": "8eb8e26e-01a7-56ee-b847-3add243345f9",
   },
 }
 `;
@@ -38,8 +38,16 @@ exports[`TransactionInitializeSessionWebhookHandler > %p https://api.playground.
 exports[`TransactionInitializeSessionWebhookHandler > %p https://api.playground.klarna.com/ > 'Order' > should work 1`] = `
 {
   "klarnaSessionResponse": {
-    "client_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyMzA1ZWJjLWI4MTEtMzYzNy1hYTRjLTY2ZWNhMTg3NGYzZCJ9.eyJzZXNzaW9uX2lkIjoiOGFiN2U5NjMtMTNiYS01ZjgyLTgyNDAtMzNmZDNlMTM3NzM2IiwiYmFzZV91cmwiOiJodHRwczovL2pzLnBsYXlncm91bmQua2xhcm5hLmNvbS9ldS9rcCIsImRlc2lnbiI6ImtsYXJuYSIsImxhbmd1YWdlIjoiZW4iLCJwdXJjaGFzZV9jb3VudHJ5IjoiU0UiLCJlbnZpcm9ubWVudCI6InBsYXlncm91bmQiLCJtZXJjaGFudF9uYW1lIjoiWW91ciBidXNpbmVzcyBuYW1lIiwic2Vzc2lvbl90eXBlIjoiUEFZTUVOVFMiLCJjbGllbnRfZXZlbnRfYmFzZV91cmwiOiJodHRwczovL2V1LnBsYXlncm91bmQua2xhcm5hZXZ0LmNvbSIsInNjaGVtZSI6dHJ1ZSwiZXhwZXJpbWVudHMiOlt7Im5hbWUiOiJrcGMtMWstc2VydmljZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3BjLVBTRUwtMzA5OSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXBvcHVwLXJldHJpYWJsZSIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJrcC1jbGllbnQtdXRvcGlhLXN0YXRpYy13aWRnZXQiLCJ2YXJpYXRlIjoiaW5kZXgiLCJwYXJhbWV0ZXJzIjp7ImR5bmFtaWMiOiJ0cnVlIn19LHsibmFtZSI6ImtwLWNsaWVudC1vbmUtcHVyY2hhc2UtZmxvdyIsInZhcmlhdGUiOiJ2YXJpYXRlLTEifSx7Im5hbWUiOiJpbi1hcHAtc2RrLW5ldy1pbnRlcm5hbC1icm93c2VyIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoibmV3LWludGVybmFsLWJyb3dzZXItZW5hYmxlIn19LHsibmFtZSI6ImtwLWNsaWVudC11dG9waWEtc2RrLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS13ZWJ2aWV3LWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoiaW4tYXBwLXNkay1jYXJkLXNjYW5uaW5nIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoiY2FyZC1zY2FubmluZy1lbmFibGUifX1dLCJyZWdpb24iOiJldSIsIm9yZGVyX2Ftb3VudCI6MjIyOTksIm9mZmVyaW5nX29wdHMiOjIsIm9vIjoiNXUiLCJ2ZXJzaW9uIjoidjEuMTAuMC0xNTkwLWczZWJjMzkwNyJ9.TJ0AwZrHivBbbJP970EnUtQHbS_JOHbVAtrGC3Ie1DLb8aq6tDs8QKAb0VZE1IQG41fU7F_xzHNVLqH-g09innLoOSnHYekE7ScaOQzpwmQN5bRl_4guIM-7GJxGZDICDH737bXjh4xi7TgDkzeMFkSTal_BYFzkT0ZT24r0WQWcWgxjEfC8X_g1_rgXTkXJVjXrWykFLIjdU_1F98imsOObS5AVNtXjiQwEraK801JeiMCIm6g9GZscwWMpXaxIw0XWmkSGndUzWMFiYnOsSEkkJJpYcTOnMTkxHvTANC61HEcTPzmHgbrTINxfWIBYwfwv-2gt5Ba8Z2cMJ_o8aw",
+    "client_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjgyMzA1ZWJjLWI4MTEtMzYzNy1hYTRjLTY2ZWNhMTg3NGYzZCJ9.eyJzZXNzaW9uX2lkIjoiOTViNmMyNjEtOWExYS01OGQ3LWE3N2YtYzM5NDU0MjdjNTFiIiwiYmFzZV91cmwiOiJodHRwczovL2pzLnBsYXlncm91bmQua2xhcm5hLmNvbS9ldS9rcCIsImRlc2lnbiI6ImtsYXJuYSIsImxhbmd1YWdlIjoiZW4iLCJwdXJjaGFzZV9jb3VudHJ5IjoiU0UiLCJlbnZpcm9ubWVudCI6InBsYXlncm91bmQiLCJtZXJjaGFudF9uYW1lIjoiWW91ciBidXNpbmVzcyBuYW1lIiwic2Vzc2lvbl90eXBlIjoiUEFZTUVOVFMiLCJjbGllbnRfZXZlbnRfYmFzZV91cmwiOiJodHRwczovL2V1LnBsYXlncm91bmQua2xhcm5hZXZ0LmNvbSIsInNjaGVtZSI6dHJ1ZSwiZXhwZXJpbWVudHMiOlt7Im5hbWUiOiJrcC1jbGllbnQtb25lLXB1cmNoYXNlLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3BjLTFrLXNlcnZpY2UiLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS1mbG93IiwidmFyaWF0ZSI6InZhcmlhdGUtMSJ9LHsibmFtZSI6ImtwYy1QU0VMLTMwOTkiLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS1zdGF0aWMtd2lkZ2V0IiwidmFyaWF0ZSI6ImluZGV4IiwicGFyYW1ldGVycyI6eyJkeW5hbWljIjoidHJ1ZSJ9fSx7Im5hbWUiOiJpbi1hcHAtc2RrLW5ldy1pbnRlcm5hbC1icm93c2VyIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoibmV3LWludGVybmFsLWJyb3dzZXItZW5hYmxlIn19LHsibmFtZSI6ImtwLWNsaWVudC11dG9waWEtc2RrLWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoia3AtY2xpZW50LXV0b3BpYS13ZWJ2aWV3LWZsb3ciLCJ2YXJpYXRlIjoidmFyaWF0ZS0xIn0seyJuYW1lIjoiaW4tYXBwLXNkay1jYXJkLXNjYW5uaW5nIiwicGFyYW1ldGVycyI6eyJ2YXJpYXRlX2lkIjoiY2FyZC1zY2FubmluZy1lbmFibGUifX1dLCJyZWdpb24iOiJldSIsIm9yZGVyX2Ftb3VudCI6MjIyOTksIm9mZmVyaW5nX29wdHMiOjIsIm9vIjoiZDIiLCJ2ZXJzaW9uIjoidjEuMTAuMC0xNTkwLWczZWJjMzkwNyJ9.l6L0UWShbJ-EG9TSg_DFwM9fbB1wlbK8fxVVx-csE5fjvUOD2YvTmxnzCMs3JPVoJvNHdzj6DFZYiPoLGMWtJB0_Vf2SWWrnqWx_MpRWGvRfpWyFqvWtcL-W35ensdR_r1SBGJoj15COT9I0EM0qZspTsZM-teJ0ZkoyaO2amP6AtHOB8QtTDKPYcWanYmlL-DquBXP23Hm57KiM2HmPS-MSPNHrZm1yk2aJsZ_kFZ_ONadHs9apysXnhnPJ-LYOxMnwpUFpW22GNIzrAA7qGlYanB6fUS51g3gO8gwpn04OZBdlxtZjN6FPqkba5_AFaqmuH1zESGFx75mKR8EfAw",
     "payment_method_categories": [
+      {
+        "asset_urls": {
+          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
+        },
+        "identifier": "pay_later",
+        "name": "Buy now, pay later",
+      },
       {
         "asset_urls": {
           "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
@@ -54,18 +62,10 @@ exports[`TransactionInitializeSessionWebhookHandler > %p https://api.playground.
           "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
         },
         "identifier": "pay_now",
-        "name": "Direct debit",
-      },
-      {
-        "asset_urls": {
-          "descriptive": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
-          "standard": "https://x.klarnacdn.net/payment-method/assets/badges/generic/klarna.svg",
-        },
-        "identifier": "pay_later",
-        "name": "Buy now, pay later",
+        "name": "Pay now",
       },
     ],
-    "session_id": "8ab7e963-13ba-5f82-8240-33fd3e137736",
+    "session_id": "95b6c261-9a1a-58d7-a77f-c3945427c51b",
   },
 }
 `;

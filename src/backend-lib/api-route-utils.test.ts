@@ -62,6 +62,7 @@ describe("api-route-utils", () => {
       const authData = {
         saleorApiUrl: testEnv.TEST_SALEOR_API_URL,
       };
+      const baseUrl = testEnv.APP_API_BASE_URL;
 
       await webhookHandler(
         {} as NextApiRequest,
@@ -69,10 +70,14 @@ describe("api-route-utils", () => {
         {
           authData,
           payload,
+          baseUrl,
         } as unknown as WebhookContext,
       );
 
-      expect(handler).toHaveBeenCalledWith(payload, authData.saleorApiUrl);
+      expect(handler).toHaveBeenCalledWith(payload, {
+        baseUrl: "https://klarna.saleor.app",
+        saleorApiUrl: "https://saleor.localhost:8080/graphql/",
+      });
     });
 
     it("returns json with result", async () => {

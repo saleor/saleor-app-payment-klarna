@@ -5,7 +5,7 @@ import { createLogger } from "@/lib/logger";
 
 export const PaymentGatewayInitializeSessionWebhookHandler = async (
   event: PaymentGatewayInitializeSessionEventFragment,
-  _saleorApiUrl: string,
+  {}: { saleorApiUrl: string; baseUrl: string },
 ): Promise<PaymentGatewayInitializeSessionResponse> => {
   const logger = createLogger(
     {},
