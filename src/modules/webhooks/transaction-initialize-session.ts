@@ -14,7 +14,7 @@ import {
   type KlarnaMetadata,
   prepareRequestAddress,
 } from "@/modules/klarna/klarna-api";
-import { type components } from "generated/klarna";
+import { type components } from "generated/klarna-payments";
 import { obfuscateConfig } from "@/modules/app-configuration/utils";
 import { type JSONObject } from "@/types";
 import { KlarnaHttpClientError } from "@/errors";

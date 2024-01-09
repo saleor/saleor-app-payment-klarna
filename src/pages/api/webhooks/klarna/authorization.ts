@@ -1,6 +1,6 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { print } from "graphql";
-import { type components } from "generated/klarna";
+import { type components } from "generated/klarna-payments";
 import { saleorApp } from "@/saleor-app";
 import { createServerClient } from "@/lib/create-graphq-client";
 import { getPaymentAppConfigurator } from "@/modules/payment-app-configuration/payment-app-configuration-factory";
