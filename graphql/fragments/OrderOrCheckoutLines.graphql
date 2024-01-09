@@ -1,3 +1,47 @@
+fragment OrderLine on OrderLine {
+  __typename
+  id
+  quantity
+  taxRate
+  requiresShipping: isShippingRequired
+  unitPrice {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
+  }
+  totalPrice {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
+  }
+  orderVariant: variant {
+    id
+    name
+    sku
+    product {
+      name
+      thumbnail {
+        url
+      }
+      category {
+        name
+      }
+    }
+  }
+}
+
 fragment OrderOrCheckoutLines on OrderOrCheckout {
   __typename
   ... on Checkout {
@@ -92,47 +136,7 @@ fragment OrderOrCheckoutLines on OrderOrCheckout {
       }
     }
     lines {
-      __typename
-      id
-      quantity
-      taxRate
-      requiresShipping: isShippingRequired
-      unitPrice {
-        gross {
-          ...Money
-        }
-        net {
-          ...Money
-        }
-        tax {
-          ...Money
-        }
-      }
-      totalPrice {
-        gross {
-          ...Money
-        }
-        net {
-          ...Money
-        }
-        tax {
-          ...Money
-        }
-      }
-      orderVariant: variant {
-        id
-        name
-        sku
-        product {
-          name
-          thumbnail {
-            url
-          }
-          category {
-            name
-          }
-        }
-      }
+      ...OrderLine
     }
   }
 }

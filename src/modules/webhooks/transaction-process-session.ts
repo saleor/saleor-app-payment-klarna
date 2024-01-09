@@ -17,7 +17,7 @@ import {
 } from "@/modules/klarna/klarna-api";
 import { paymentAppFullyConfiguredEntrySchema } from "@/modules/payment-app-configuration/config-entry";
 import { getWebhookPaymentAppConfigurator } from "@/modules/payment-app-configuration/payment-app-configuration-factory";
-import { type components } from "generated/klarna";
+import { type components } from "generated/klarna-payments";
 import { KlarnaHttpClientError } from "@/errors";
 import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
 
