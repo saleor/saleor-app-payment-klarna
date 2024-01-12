@@ -28,6 +28,13 @@ fragment TransactionRefundRequestedEvent on TransactionRefundRequested {
   transaction {
     id
     pspReference
+    events {
+      type
+      amount {
+        ...Money
+      }
+      pspReference
+    }
     chargedAmount {
       ...Money
     }

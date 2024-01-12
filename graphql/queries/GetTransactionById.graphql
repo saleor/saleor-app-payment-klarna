@@ -2,6 +2,15 @@ query GetTransactionById($transactionId: ID!) {
   transaction(id: $transactionId) {
     id
 
+    events {
+      id
+      pspReference
+      type
+      amount {
+        ...Money
+      }
+    }
+
     checkout {
       __typename
       id
