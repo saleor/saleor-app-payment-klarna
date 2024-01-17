@@ -83,7 +83,7 @@
     "vite": "4.4.9",
     "webpack": "5.88.2",
     "yup": "1.2.0",
-    "zod": "3.22.2",
+    "zod": "3.22.4",
     "zustand": "4.4.1"
   },
   "devDependencies": {
