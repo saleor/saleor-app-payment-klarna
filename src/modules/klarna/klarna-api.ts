@@ -32,12 +32,9 @@ export type KlarnaMetadata = {
  * - Oceania:  https://api-oc.playground.klarna.com/
  */
 const cleanupKlarnaUrl = (klarnaApiUrl: string) => {
-  const trimmedKlarnaApiUrl = klarnaApiUrl.trim();
-  const trimmedKlarnaApiUrlWithoutTrailingSlash = trimmedKlarnaApiUrl.endsWith("/")
-    ? trimmedKlarnaApiUrl.slice(0, -1)
-    : trimmedKlarnaApiUrl;
-  return trimmedKlarnaApiUrlWithoutTrailingSlash;
+  return new URL(klarnaApiUrl).origin;
 };
+
 export const getKlarnaApiClient = ({
   klarnaApiUrl,
   username,
