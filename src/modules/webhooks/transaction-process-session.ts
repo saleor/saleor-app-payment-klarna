@@ -85,13 +85,21 @@ export const TransactionProcessSessionWebhookHandler = async (
     ...(event.sourceObject.__typename === "Order" && { orderId: event.sourceObject.id }),
   };
 
+  const isFullCapture = event.action.amount === event.sourceObject.total.gross.amount;
+  if (!isFullCapture) {
+    throw new Error("Partial capture is not supported");
+  }
+
   const createKlarnaOrderPayload: components["schemas"]["create_order_request"] = {
     purchase_country: country,
     purchase_currency: event.action.currency,
     billing_address: prepareRequestAddress(event.sourceObject.billingAddress, email),
     shipping_address: prepareRequestAddress(event.sourceObject.shippingAddress, email),
-    order_amount: getKlarnaIntegerAmountFromSaleor(event.action.amount, event.action.currency),
-    order_tax_amount: 0, // @todo
+    order_amount: getKlarnaIntegerAmountFromSaleor(
+      event.sourceObject.total.gross.amount,
+      event.sourceObject.total.gross.currency,
+    ),
+    order_tax_amount: getKlarnaIntegerAmountFromSaleor(event.sourceObject.total.tax.amount),
     order_lines: getLineItems(event.sourceObject),
     merchant_urls: {
       confirmation: merchantConfirmationUrl,

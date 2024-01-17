@@ -29,6 +29,9 @@ fragment TransactionProcessSessionEvent on TransactionProcessSession {
         gross {
           ...Money
         }
+        tax {
+          ...Money
+        }
       }
       ...OrderOrCheckoutLines
     }
@@ -44,6 +47,9 @@ fragment TransactionProcessSessionEvent on TransactionProcessSession {
       }
       total {
         gross {
+          ...Money
+        }
+        tax {
           ...Money
         }
       }
