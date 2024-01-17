@@ -6,11 +6,12 @@ import { paymentGatewayInitializeSessionSyncWebhook } from "./webhooks/saleor/pa
 import { transactionInitializeSessionSyncWebhook } from "./webhooks/saleor/transaction-initialize-session";
 import { transactionProcessSessionSyncWebhook } from "./webhooks/saleor/transaction-process-session";
 import { env } from "@/lib/env.mjs";
+import { transactionRefundRequestedSyncWebhook } from "@/pages/api/webhooks/saleor/transaction-refund-requested";
 
 export default createManifestHandler({
   async manifestFactory({ appBaseUrl }) {
-    const iframeBaseUrl = env.APP_IFRAME_BASE_URL ?? appBaseUrl;
-    const apiBaseURL = env.APP_API_BASE_URL ?? appBaseUrl;
+    const iframeBaseUrl = env.APP_IFRAME_BASE_URL || appBaseUrl;
+    const apiBaseURL = env.APP_API_BASE_URL || appBaseUrl;
 
     const manifest: AppManifest = {
       id: "app.saleor.klarna",
@@ -32,6 +33,8 @@ export default createManifestHandler({
         paymentGatewayInitializeSessionSyncWebhook.getWebhookManifest(apiBaseURL),
         transactionInitializeSessionSyncWebhook.getWebhookManifest(apiBaseURL),
         transactionProcessSessionSyncWebhook.getWebhookManifest(apiBaseURL),
+        transactionProcessSessionSyncWebhook.getWebhookManifest(apiBaseURL),
+        transactionRefundRequestedSyncWebhook.getWebhookManifest(apiBaseURL),
       ],
       extensions: [],
     };

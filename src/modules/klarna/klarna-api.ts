@@ -5,7 +5,13 @@ import {
   type TransactionInitializeSessionAddressFragment,
   type OrderOrCheckoutLinesFragment,
 } from "generated/graphql";
-import { type paths, type components } from "generated/klarna";
+import {
+  type paths as PaymentPaths,
+  type components as PaymentComponents,
+} from "generated/klarna-payments";
+import { type paths as OrdersPaths } from "generated/klarna-orders";
+type AllKlarnaPaths = PaymentPaths & OrdersPaths;
+
 import { KlarnaHttpClientError } from "@/errors";
 
 export type KlarnaMetadata = {
@@ -25,6 +31,10 @@ export type KlarnaMetadata = {
  * - North America:  https://api-na.playground.klarna.com/
  * - Oceania:  https://api-oc.playground.klarna.com/
  */
+const cleanupKlarnaUrl = (klarnaApiUrl: string) => {
+  return new URL(klarnaApiUrl).origin;
+};
+
 export const getKlarnaApiClient = ({
   klarnaApiUrl,
   username,
@@ -34,11 +44,9 @@ export const getKlarnaApiClient = ({
   username: string;
   password: string;
 }) => {
-  klarnaApiUrl = klarnaApiUrl.trim();
-  klarnaApiUrl = klarnaApiUrl.endsWith("/") ? klarnaApiUrl.slice(0, -1) : klarnaApiUrl;
-  const fetcher = Fetcher.for<paths>();
+  const fetcher = Fetcher.for<AllKlarnaPaths>();
   fetcher.configure({
-    baseUrl: klarnaApiUrl,
+    baseUrl: cleanupKlarnaUrl(klarnaApiUrl),
     init: {
       headers: {
         Authorization: getAuthorizationHeader({ username, password }),
@@ -68,9 +76,13 @@ export const getLineItems = ({
   lines,
   shippingPrice,
   deliveryMethod,
-}: OrderOrCheckoutLinesFragment): components["schemas"]["order_line"][] => {
-  const shippingLineItem: components["schemas"]["order_line"] | null =
-    deliveryMethod?.__typename === "ShippingMethod"
+}: {
+  lines: OrderOrCheckoutLinesFragment["lines"];
+  shippingPrice?: OrderOrCheckoutLinesFragment["shippingPrice"];
+  deliveryMethod?: OrderOrCheckoutLinesFragment["deliveryMethod"];
+}): PaymentComponents["schemas"]["order_line"][] => {
+  const shippingLineItem: PaymentComponents["schemas"]["order_line"] | null =
+    shippingPrice && deliveryMethod?.__typename === "ShippingMethod"
       ? {
           type: "shipping_fee",
           reference: deliveryMethod.id,
@@ -103,7 +115,7 @@ export const getLineItems = ({
 
     invariant(variant, `Unknown line type: ${line.__typename || "<undefined>"}`);
 
-    const klarnaLineItem: components["schemas"]["order_line"] = {
+    const klarnaLineItem: PaymentComponents["schemas"]["order_line"] = {
       type: line.requiresShipping ? "physical" : "digital",
       reference: variant.sku || variant.id,
       name: variant.product.name + " - " + variant.name,
@@ -132,7 +144,7 @@ export const getLineItems = ({
 export const prepareRequestAddress = (
   address: undefined | null | TransactionInitializeSessionAddressFragment,
   email: undefined | null | string,
-): undefined | components["schemas"]["address"] => {
+): undefined | PaymentComponents["schemas"]["address"] => {
   if (!address) {
     return undefined;
   }

@@ -1,6 +1,6 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
 import { print } from "graphql";
-import { type components } from "generated/klarna";
+import { type components } from "generated/klarna-payments";
 import { saleorApp } from "@/saleor-app";
 import { createServerClient } from "@/lib/create-graphq-client";
 import { getPaymentAppConfigurator } from "@/modules/payment-app-configuration/payment-app-configuration-factory";
@@ -24,6 +24,7 @@ import {
   type GetTransactionByIdQueryVariables,
   TransactionEventReportDocument,
   TransactionEventTypeEnum,
+  TransactionActionEnum,
 } from "generated/graphql";
 
 export default async function KlarnaAuthorizationWebhookHandler(
@@ -158,11 +159,12 @@ export default async function KlarnaAuthorizationWebhookHandler(
       transactionId,
       amount: sourceObject.total.gross.amount,
 
-      availableActions: [],
-      // @todo uncomment when refund and cancel are implemented
-      // klarnaOrder.data.fraud_status === "ACCEPTED"
-      //   ? [TransactionActionEnum.Refund]
-      //   : [TransactionActionEnum.Cancel],
+      availableActions:
+        klarnaOrder.data.fraud_status === "ACCEPTED"
+          ? [TransactionActionEnum.Refund]
+          : // @todo uncomment when cancel is implemented
+            // : [TransactionActionEnum.Cancel],
+            [],
       externalUrl,
       time: new Date().toISOString(),
       type:
