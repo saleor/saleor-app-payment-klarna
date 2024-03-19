@@ -1,51 +1,110 @@
-<div align="center">
-  <img width="150" alt="" src="https://user-images.githubusercontent.com/1338731/222410999-3ec838de-d49a-4d48-8f8a-4788beeef80d.png">
-</div>
+# Klarna app
 
-<div align="center">
-  <h1>Saleor App Payment Template</h1>
-</div>
+This app integrates Saleor with [Klarna](https://www.klarna.com/pl/) payment gateway.
 
-<div align="center">
-  <a href="https://saleor.io/">Website</a>
-  <span> | </span>
-  <a href="https://docs.saleor.io/docs/3.x/">Docs</a>
+Required Saleor version: **3.15**
 
-</div>
+> [!NOTE]
+> This is an example implementation. Only community support is available.
 
-## 🚀 Quick start
+## Development
 
-### Requirements
+### Prerequisites
 
-- `pnpm` – at least 8.8.0
-- `node` – at least 18.0.0
+#### Software
+
+- Node.js 18
+
+- pnpm 8.8.0
+
+#### Access
+
+You need to have a Klarna playground account to run this app. You can create one [here](https://docs.klarna.com/resources/test-environment/before-you-test/).
 
 ### Installation
 
-```bash
-pnpm install
-```
+1. Copy `.env.example` to `.env` and fill in the required values.
+2. `pnpm install`
 
-### Development
+### Usage
 
-Copy the `.env.example` file to `.env`:
+> [!IMPORTANT]
+> The app needs to be [tunneled](https://docs.saleor.io/docs/3.x/developer/extending/apps/developing-with-tunnels) in local development.
 
-```bash
-cp .env.example .env
-```
-
-When developing, use the `dev` command to start the app:
+To run the app on port 3000, use the following command:
 
 ```bash
 pnpm dev
 ```
 
-The app should be available on `http://localhost:3000`.
+Each time you modify a `.graphql` file, you have to run:
 
-To install the app in Saleor, you might find it useful to use some sort of TCP tunneling tool, like [ngrok](https://ngrok.com/). Once you have your public tunnel URL, change the value of `APP_API_BASE_URL` and `APP_IFRAME_BASE_URL` in `.env` to your tunnel URL.
+```bash
+pnpm generate
+```
 
-### APL
+to regenerate the GraphQL types.
 
-Saleor apps use Auth Persistence Layer (APL) to store authentication tokens. By default, `FileAPL` is used that stores tokens in a file.
+### Running storefront example
 
-You can read more about it here: https://docs.saleor.io/docs/3.x/developer/extending/apps/developing-apps/app-sdk/apl
+This app comes with a simple storefront example. To run it, follow these steps:
+
+1. Clone [the repository](https://github.com/saleor/example-nextjs-klarna).
+2. Copy `.env.example` to `.env` and fill in the required values.
+3. `pnpm install`
+4. `pnpm dev`
+
+Each time you modify a `.graphql` file, you have to run:
+
+```bash
+pnpm generate
+```
+
+### Vendor software
+
+The app uses a custom implementation of the Klarna API client. The client is located in `generated/klarna.ts`.
+
+## Overview
+
+### Features
+
+- ✅ [Authorize transactions](https://docs.saleor.io/docs/3.x/developer/payments#authorization_success)
+- ✅ [Charge transactions](https://docs.saleor.io/docs/3.x/developer/payments#charge_success)
+- ❌ [Refund transactions](https://docs.saleor.io/docs/3.x/api-reference/webhooks/enums/webhook-event-type-sync-enum#code-style-fontweight-normal-webhookeventtypesyncenumbtransaction_refund_requestedbcode)
+- ❌ [Cancel transactions](https://docs.saleor.io/docs/3.x/api-reference/webhooks/enums/webhook-event-type-sync-enum#code-style-fontweight-normal-webhookeventtypesyncenumbtransaction_cancelation_requestedbcode)
+- ✅ [Initialize payment gateway](https://docs.saleor.io/docs/3.x/developer/payments#initialize-payment-gateway)
+- ❌ [Saved payment methods](https://docs.saleor.io/docs/3.x/developer/payments#stored-payment-methods)
+- ✅ [Storing config in metadata](https://docs.saleor.io/docs/3.x/developer/extending/apps/developing-apps/apps-patterns/persistence-with-metadata-manager)
+- ❌ Two way webhook synchronization (Saleor → Service → Saleor)
+- ✅ Front-end example (in [external repository](https://github.com/saleor/example-nextjs-klarna))
+
+#### Payment methods
+
+TODO
+
+### Payment flow
+
+QUESTION:
+- Does the Klarna `example` work? Because there are some Stripe leftovers (e.g. in `src/app/app-router/cart/payment/page.tsx`)
+
+1. Execute `checkoutCreate` mutation from the front-end.
+2. Execute `transactionInitialize` mutation from the front-end. In the app, the `transaction-initialize-session.ts` handler creates a session in Klarna. Depending on the chosen `TransactionFlowStrategyEnum`, it will respond with either `AUTHORIZATION_ACTION_REQUIRED` or `CHARGE_ACTION_REQUIRED`. `transaction-initialize-session` returns the `data` needed to render the Klarna component.
+3. Render the Klarna component in the front-end.
+4. Once the payment process is finished, execute the `transactionProcess` mutation from the front-end. In the app, the `transaction-process-session.ts` handler creates an order in Klarna.
+
+### Assumptions
+
+TODO
+
+### Limitations
+
+TODO
+
+## Configuration
+
+You will need to provide the following configuration:
+
+- Username - your Klarna username
+- Password - your Klarna password
+
+Now, save the configuration and assign it to the channel you want to use it with.
