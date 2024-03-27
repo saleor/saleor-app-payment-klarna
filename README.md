@@ -80,12 +80,9 @@ The app uses a custom implementation of the Klarna API client. The client is loc
 
 #### Payment methods
 
-TODO
+- Klarna (credit card)
 
 ### Payment flow
-
-QUESTION:
-- Does the Klarna `example` work? Because there are some Stripe leftovers (e.g. in `src/app/app-router/cart/payment/page.tsx`)
 
 1. Execute `checkoutCreate` mutation from the front-end.
 2. Execute `transactionInitialize` mutation from the front-end. In the app, the `transaction-initialize-session.ts` handler creates a session in Klarna. Depending on the chosen `TransactionFlowStrategyEnum`, it will respond with either `AUTHORIZATION_ACTION_REQUIRED` or `CHARGE_ACTION_REQUIRED`. `transaction-initialize-session` returns the `data` needed to render the Klarna component.
