@@ -44,7 +44,15 @@ describe("TransactionInitializeSessionWebhookHandler", () => {
         const privateMetadata = await configurator.getRawConfig();
 
         const event = await createMockTransactionInitializeSessionEvent({
-          data: {},
+          data: {
+            merchantUrls: {
+              success: "https://example.com/success",
+              cancel: "https://example.com/cancel",
+              back: "https://example.com/back",
+              failure: "https://example.com/failure",
+              error: "https://example.com/error",
+            },
+          },
           action: {
             amount: 99.99 + 123.0,
             currency: "SEK",
@@ -71,10 +79,8 @@ describe("TransactionInitializeSessionWebhookHandler", () => {
           saleorApiUrl: testEnv.TEST_SALEOR_API_URL,
           baseUrl: testEnv.APP_API_BASE_URL,
         });
-        expect(initializeResult.data?.klarnaSessionResponse).toMatchObject({
-          client_token: expect.any(String),
-          payment_method_categories: expect.any(Array),
-          session_id: expect.any(String),
+        expect(initializeResult.data?.klarnaHppResponse).toMatchObject({
+          redirectUrl: expect.any(String),
         });
         expect(initializeResult.result).toBe("AUTHORIZATION_ACTION_REQUIRED");
         expect(initializeResult.data).toMatchSnapshot();
@@ -100,7 +106,15 @@ describe("TransactionInitializeSessionWebhookHandler", () => {
         // line is 2 * 10
         // but we request payment for just 20
         const event = await createMockTransactionInitializeSessionEvent({
-          data: {},
+          data: {
+            merchantUrls: {
+              success: "https://example.com/success",
+              cancel: "https://example.com/cancel",
+              back: "https://example.com/back",
+              failure: "https://example.com/failure",
+              error: "https://example.com/error",
+            },
+          },
           action: {
             amount: 20,
             currency: "SEK",
@@ -174,10 +188,8 @@ describe("TransactionInitializeSessionWebhookHandler", () => {
           saleorApiUrl: testEnv.TEST_SALEOR_API_URL,
           baseUrl: testEnv.APP_API_BASE_URL,
         });
-        expect(initializeResult.data?.klarnaSessionResponse).toMatchObject({
-          client_token: expect.any(String),
-          payment_method_categories: expect.any(Array),
-          session_id: expect.any(String),
+        expect(initializeResult.data?.klarnaHppResponse).toMatchObject({
+          redirectUrl: expect.any(String),
         });
         expect(initializeResult.result).toBe("AUTHORIZATION_ACTION_REQUIRED");
         expect(initializeResult.data).toMatchSnapshot();
