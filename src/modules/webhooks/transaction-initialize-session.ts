@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { getNormalizedLocale } from "@/backend-lib/api-route-utils";
 import { KlarnaHttpClientError } from "@/errors";
 import { env } from "@/lib/env.mjs";
@@ -21,6 +22,16 @@ import {
 } from "generated/graphql";
 import { type components as hppComponents } from "generated/klarna-hpp";
 import { type components as paymentsComponents } from "generated/klarna-payments";
+
+const transactionInitializePayloadData = z.object({
+  merchantUrls: z.object({
+    success: z.string().url(),
+    cancel: z.string().url().optional(),
+    back: z.string().url().optional(),
+    failure: z.string().url().optional(),
+    error: z.string().url().optional(),
+  }),
+});
 
 export const TransactionInitializeSessionWebhookHandler = async (
   event: TransactionInitializeSessionEventFragment,
@@ -46,6 +57,8 @@ export const TransactionInitializeSessionWebhookHandler = async (
   const app = event.recipient;
   invariant(app, "Missing event.recipient!");
   invariant(event.data, "Missing data");
+
+  const merchantUrls = transactionInitializePayloadData.parse(event.data).merchantUrls;
 
   const { privateMetadata } = app;
 
@@ -123,11 +136,8 @@ export const TransactionInitializeSessionWebhookHandler = async (
     payment_session_url:
       klarnaConfig.apiUrl + "/payments/v1/sessions/" + klarnaSession.data.session_id,
     merchant_urls: {
-      success: env.STOREFRONT_URL + `/${transactionId}?authorization_token={{authorization_token}}`,
-      cancel: env.STOREFRONT_URL + "/cancel",
-      back: env.STOREFRONT_URL + "/back",
-      failure: env.STOREFRONT_URL + "/failure",
-      error: env.STOREFRONT_URL + "/error",
+      ...merchantUrls,
+      success: merchantUrls.success + "?authorization_token={{authorization_token}}",
     },
   };
 

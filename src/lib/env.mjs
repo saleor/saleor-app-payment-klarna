@@ -26,7 +26,6 @@ export const env = createEnv({
     REST_APL_TOKEN: z.string().optional(),
     APP_API_BASE_URL: z.string().optional(),
     APP_IFRAME_BASE_URL: z.string().optional(),
-    STOREFRONT_URL: z.string(),
   },
 
   /*
@@ -61,6 +60,5 @@ export const env = createEnv({
     REST_APL_TOKEN: process.env.REST_APL_TOKEN,
     APP_API_BASE_URL: process.env.APP_API_BASE_URL,
     APP_IFRAME_BASE_URL: process.env.APP_IFRAME_BASE_URL,
-    STOREFRONT_URL: process.env.STOREFRONT_URL,
   },
 });
