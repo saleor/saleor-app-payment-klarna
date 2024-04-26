@@ -1,26 +1,37 @@
+import { z } from "zod";
+import { getNormalizedLocale } from "@/backend-lib/api-route-utils";
+import { KlarnaHttpClientError } from "@/errors";
+import { env } from "@/lib/env.mjs";
+import { invariant } from "@/lib/invariant";
+import { createLogger } from "@/lib/logger";
+import { obfuscateConfig } from "@/modules/app-configuration/utils";
+import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
+import {
+  getKlarnaApiClient,
+  getLineItems,
+  prepareRequestAddress,
+  type KlarnaMetadata,
+} from "@/modules/klarna/klarna-api";
+import { paymentAppFullyConfiguredEntrySchema } from "@/modules/payment-app-configuration/config-entry";
+import { getConfigurationForChannel } from "@/modules/payment-app-configuration/payment-app-configuration";
+import { getWebhookPaymentAppConfigurator } from "@/modules/payment-app-configuration/payment-app-configuration-factory";
 import { type TransactionInitializeSessionResponse } from "@/schemas/TransactionInitializeSession/TransactionInitializeSessionResponse.mjs";
 import {
   TransactionFlowStrategyEnum,
   type TransactionInitializeSessionEventFragment,
 } from "generated/graphql";
-import { invariant } from "@/lib/invariant";
-import { createLogger } from "@/lib/logger";
-import { getConfigurationForChannel } from "@/modules/payment-app-configuration/payment-app-configuration";
-import { getWebhookPaymentAppConfigurator } from "@/modules/payment-app-configuration/payment-app-configuration-factory";
-import { paymentAppFullyConfiguredEntrySchema } from "@/modules/payment-app-configuration/config-entry";
-import {
-  getLineItems,
-  getKlarnaApiClient,
-  type KlarnaMetadata,
-  prepareRequestAddress,
-} from "@/modules/klarna/klarna-api";
-import { type components } from "generated/klarna-payments";
-import { obfuscateConfig } from "@/modules/app-configuration/utils";
-import { type JSONObject } from "@/types";
-import { KlarnaHttpClientError } from "@/errors";
-import { getKlarnaIntegerAmountFromSaleor } from "@/modules/klarna/currencies";
-import { getNormalizedLocale } from "@/backend-lib/api-route-utils";
-import { env } from "@/lib/env.mjs";
+import { type components as hppComponents } from "generated/klarna-hpp";
+import { type components as paymentsComponents } from "generated/klarna-payments";
+
+const transactionInitializePayloadData = z.object({
+  merchantUrls: z.object({
+    success: z.string().url(),
+    cancel: z.string().url().optional(),
+    back: z.string().url().optional(),
+    failure: z.string().url().optional(),
+    error: z.string().url().optional(),
+  }),
+});
 
 export const TransactionInitializeSessionWebhookHandler = async (
   event: TransactionInitializeSessionEventFragment,
@@ -47,6 +58,8 @@ export const TransactionInitializeSessionWebhookHandler = async (
   invariant(app, "Missing event.recipient!");
   invariant(event.data, "Missing data");
 
+  const merchantUrls = transactionInitializePayloadData.parse(event.data).merchantUrls;
+
   const { privateMetadata } = app;
 
   const configurator = getWebhookPaymentAppConfigurator({ privateMetadata }, saleorApiUrl);
@@ -62,6 +75,8 @@ export const TransactionInitializeSessionWebhookHandler = async (
   });
 
   const createKlarnaSession = klarnaClient.path("/payments/v1/sessions").method("post").create();
+
+  const createHppSession = klarnaClient.path("/hpp/v1/sessions").method("post").create();
 
   const locale = getNormalizedLocale(event);
 
@@ -88,7 +103,7 @@ export const TransactionInitializeSessionWebhookHandler = async (
   authorizationCallbackUrl.searchParams.set("saleorApiUrl", saleorApiUrl);
 
   const email = sourceObject.userEmail;
-  const createKlarnaSessionPayload: components["schemas"]["session_create"] = {
+  const createKlarnaSessionPayload: paymentsComponents["schemas"]["session_create"] = {
     locale: locale.split("_")[0],
     purchase_country: country,
     purchase_currency: event.action.currency,
@@ -105,21 +120,42 @@ export const TransactionInitializeSessionWebhookHandler = async (
       authorization: authorizationCallbackUrl.toString(),
     },
   };
+
   logger.info(authorizationCallbackUrl.toString());
   logger.debug({ ...obfuscateConfig(createKlarnaSessionPayload) }, "createKlarnaSession payload");
 
   const klarnaSession = await createKlarnaSession(createKlarnaSessionPayload);
+
   logger.debug({ ...obfuscateConfig(klarnaSession) }, "createKlarnaSession result");
 
   if (!klarnaSession.ok) {
     throw new KlarnaHttpClientError(klarnaSession.statusText, { errors: [klarnaSession.data] });
   }
 
+  const createHppSessionPayload: hppComponents["schemas"]["SessionCreationRequestV1"] = {
+    payment_session_url:
+      klarnaConfig.apiUrl + "/payments/v1/sessions/" + klarnaSession.data.session_id,
+    merchant_urls: {
+      ...merchantUrls,
+      success: merchantUrls.success + "?authorization_token={{authorization_token}}",
+    },
+  };
+
+  const klarnaHpp = await createHppSession(createHppSessionPayload);
+
+  if (!klarnaHpp.ok) {
+    throw new KlarnaHttpClientError(klarnaHpp.statusText, { errors: [klarnaHpp.data] });
+  }
+
+  invariant(klarnaHpp.data.redirect_url, "Missing redirect_url in klarnaHpp response");
+
   const transactionInitializeSessionResponse: TransactionInitializeSessionResponse = {
     data: {
-      klarnaSessionResponse: klarnaSession.data as JSONObject,
+      klarnaHppResponse: {
+        redirectUrl: klarnaHpp.data.redirect_url,
+      },
     },
-    pspReference: klarnaSession.data.session_id,
+    pspReference: klarnaHpp.data.session_id,
     result:
       event.action.actionType === TransactionFlowStrategyEnum.Authorization
         ? "AUTHORIZATION_ACTION_REQUIRED"
@@ -127,7 +163,7 @@ export const TransactionInitializeSessionWebhookHandler = async (
     actions: [],
     amount: action.amount,
     message: "",
-    externalUrl: undefined, // @todo,
+    externalUrl: klarnaHpp.data.session_url,
   };
   return transactionInitializeSessionResponse;
 };

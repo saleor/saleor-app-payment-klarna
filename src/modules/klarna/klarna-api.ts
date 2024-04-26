@@ -10,7 +10,9 @@ import {
   type components as PaymentComponents,
 } from "generated/klarna-payments";
 import { type paths as OrdersPaths } from "generated/klarna-orders";
-type AllKlarnaPaths = PaymentPaths & OrdersPaths;
+import { type paths as HppPaths } from "generated/klarna-hpp";
+
+type AllKlarnaPaths = PaymentPaths & OrdersPaths & HppPaths;
 
 import { KlarnaHttpClientError } from "@/errors";
 

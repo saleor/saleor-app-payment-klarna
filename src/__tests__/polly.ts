@@ -244,7 +244,7 @@ const getRecordingSettings = (): Pick<
   }
   return {
     mode: "replay",
-    recordIfMissing: false,
+    recordIfMissing: true,
     recordFailedRequests: false,
   };
 };
