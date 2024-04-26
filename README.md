@@ -13,9 +13,9 @@ Required Saleor version: **3.15**
 
 #### Software
 
-- Node.js 18
+- Node.js 20
 
-- pnpm 8.8.0
+- pnpm 8.14.2
 
 #### Access
 
@@ -88,14 +88,6 @@ The app uses a custom implementation of the Klarna API client. The client is loc
 2. Execute `transactionInitialize` mutation from the front-end. In the app, the `transaction-initialize-session.ts` handler creates a session in Klarna. Depending on the chosen `TransactionFlowStrategyEnum`, it will respond with either `AUTHORIZATION_ACTION_REQUIRED` or `CHARGE_ACTION_REQUIRED`. `transaction-initialize-session` returns the `data` needed to render the Klarna component.
 3. Render the Klarna component in the front-end.
 4. Once the payment process is finished, execute the `transactionProcess` mutation from the front-end. In the app, the `transaction-process-session.ts` handler creates an order in Klarna.
-
-### Assumptions
-
-TODO
-
-### Limitations
-
-TODO
 
 ## Configuration
 
