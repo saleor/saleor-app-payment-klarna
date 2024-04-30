@@ -5,10 +5,8 @@ import { SALEOR_API_URL_HEADER, SALEOR_AUTHORIZATION_BEARER_HEADER } from "@sale
 import { useErrorModalStore } from "../ui/organisms/GlobalErrorModal/state";
 import { type AppRouter } from "./trpc-app-router";
 import { getErrorHandler } from "./utils";
-import { logger } from "@/lib/logger";
-import { appBridgeInstance } from "@/app-bridge-instance";
 import { BaseTrpcError, JwtInvalidError, JwtTokenExpiredError } from "@/errors";
-import { isDevelopment } from "@/lib/isEnv";
+import { appBridgeInstance } from "@/app-bridge-instance";
 
 const genericErrorHandler = (err: unknown) => {
   getErrorHandler({
@@ -22,15 +20,6 @@ export const trpcClient = createTRPCNext<AppRouter>({
     return {
       abortOnUnmount: true,
       links: [
-        loggerLink({
-          // enable client and server logs for development
-          // enable client logs for production
-          enabled: (opts) =>
-            (isDevelopment() && typeof window !== "undefined") ||
-            (opts.direction === "down" && opts.result instanceof Error),
-          // use logger for production, console.log for development
-          logger: !isDevelopment() ? (data) => logger.error(data, "TRPC client error") : undefined,
-        }),
         loggerLink({
           logger: (data) => {
             if (data.direction === "down" && data.result instanceof TRPCClientError) {
