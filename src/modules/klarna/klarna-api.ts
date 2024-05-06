@@ -179,6 +179,10 @@ export const createMerchantConfirmationUrl = (
 };
 
 export const calculateTaxRate = (taxAmount: number, netAmount: number) => {
+  if (netAmount === 0 || taxAmount === 0) {
+    return 0;
+  }
+
   return getKlarnaIntegerAmountFromSaleor(Math.round((100 * taxAmount) / netAmount));
 };
 
