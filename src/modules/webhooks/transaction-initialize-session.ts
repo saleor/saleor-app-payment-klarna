@@ -132,9 +132,13 @@ export const TransactionInitializeSessionWebhookHandler = async (
     throw new KlarnaHttpClientError(klarnaSession.statusText, { errors: [klarnaSession.data] });
   }
 
-  const successUrl =
-    merchantUrls.success +
-    `?transaction_id=${transactionId}&authorization_token={{authorization_token}}`;
+  const baseSuccessUrl = new URL(merchantUrls.success);
+  baseSuccessUrl.searchParams.append("authorization_token", "{{authorization_token}}");
+  baseSuccessUrl.searchParams.append("transaction_id", transactionId);
+  // dont encode the search params because {{authorization_token}} is a placeholder
+  baseSuccessUrl.search = decodeURIComponent(baseSuccessUrl.search);
+
+  const successUrl = baseSuccessUrl.toString();
 
   const createHppSessionPayload: hppComponents["schemas"]["SessionCreationRequestV1"] = {
     payment_session_url:
