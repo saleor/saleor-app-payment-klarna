@@ -33,7 +33,6 @@ export default createManifestHandler({
         paymentGatewayInitializeSessionSyncWebhook.getWebhookManifest(apiBaseURL),
         transactionInitializeSessionSyncWebhook.getWebhookManifest(apiBaseURL),
         transactionProcessSessionSyncWebhook.getWebhookManifest(apiBaseURL),
-        transactionProcessSessionSyncWebhook.getWebhookManifest(apiBaseURL),
         transactionRefundRequestedSyncWebhook.getWebhookManifest(apiBaseURL),
       ],
       extensions: [],
