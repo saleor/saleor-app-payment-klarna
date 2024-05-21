@@ -70,12 +70,12 @@ The app uses a custom implementation of the Klarna API client. The client is loc
 
 - ✅ [Authorize transactions](https://docs.saleor.io/docs/3.x/developer/payments#authorization_success)
 - ✅ [Charge transactions](https://docs.saleor.io/docs/3.x/developer/payments#charge_success)
-- ❌ [Refund transactions](https://docs.saleor.io/docs/3.x/api-reference/webhooks/enums/webhook-event-type-sync-enum#code-style-fontweight-normal-webhookeventtypesyncenumbtransaction_refund_requestedbcode)
+- ✅ [Refund transactions](https://docs.saleor.io/docs/3.x/api-reference/webhooks/enums/webhook-event-type-sync-enum#code-style-fontweight-normal-webhookeventtypesyncenumbtransaction_refund_requestedbcode)
 - ❌ [Cancel transactions](https://docs.saleor.io/docs/3.x/api-reference/webhooks/enums/webhook-event-type-sync-enum#code-style-fontweight-normal-webhookeventtypesyncenumbtransaction_cancelation_requestedbcode)
 - ✅ [Initialize payment gateway](https://docs.saleor.io/docs/3.x/developer/payments#initialize-payment-gateway)
 - ❌ [Saved payment methods](https://docs.saleor.io/docs/3.x/developer/payments#stored-payment-methods)
 - ✅ [Storing config in metadata](https://docs.saleor.io/docs/3.x/developer/extending/apps/developing-apps/apps-patterns/persistence-with-metadata-manager)
-- ❌ Two way webhook synchronization (Saleor → Service → Saleor)
+- ✅ Two way webhook synchronization (Saleor → Klarna → Saleor)
 - ✅ Front-end example (in [external repository](https://github.com/saleor/example-nextjs-klarna))
 
 #### Payment methods
