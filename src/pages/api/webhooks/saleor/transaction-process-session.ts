@@ -11,6 +11,7 @@ import {
 import { getSyncWebhookHandler } from "@/backend-lib/api-route-utils";
 import { TransactionProcessSessionWebhookHandler } from "@/modules/webhooks/transaction-process-session";
 import ValidateTransactionProcessSessionResponse from "@/schemas/TransactionProcessSession/TransactionProcessSessionResponse.mjs";
+import { env } from "@/lib/env.mjs";
 
 export const config: PageConfig = {
   api: {
@@ -24,7 +25,7 @@ export const transactionProcessSessionSyncWebhook =
     apl: saleorApp.apl,
     event: "TRANSACTION_PROCESS_SESSION",
     query: UntypedTransactionProcessSessionDocument,
-    webhookPath: "/api/webhooks/saleor/transaction-process-session",
+    webhookPath: `${env.NEXT_PUBLIC_BASE_PATH}/api/webhooks/saleor/transaction-process-session`,
   });
 
 export default transactionProcessSessionSyncWebhook.createHandler(

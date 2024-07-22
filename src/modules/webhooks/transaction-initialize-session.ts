@@ -135,16 +135,41 @@ export const TransactionInitializeSessionWebhookHandler = async (
   const baseSuccessUrl = new URL(merchantUrls.success);
   baseSuccessUrl.searchParams.append("authorization_token", "{{authorization_token}}");
   baseSuccessUrl.searchParams.append("transaction_id", transactionId);
+  baseSuccessUrl.searchParams.append("sid", klarnaSession.data.session_id);
   // dont encode the search params because {{authorization_token}} is a placeholder
   baseSuccessUrl.search = decodeURIComponent(baseSuccessUrl.search);
 
   const successUrl = baseSuccessUrl.toString();
+
+  const baseCancelUrl = new URL(merchantUrls.cancel as string);
+  baseCancelUrl.searchParams.append("sid", klarnaSession.data.session_id);
+  baseCancelUrl.search = decodeURIComponent(baseCancelUrl.search);
+  const cancelUrl = baseCancelUrl.toString();
+
+  const baseBackUrl = new URL(merchantUrls.back as string);
+  baseBackUrl.searchParams.append("sid", klarnaSession.data.session_id);
+  baseBackUrl.search = decodeURIComponent(baseBackUrl.search);
+  const backUrl = baseBackUrl.toString();
+
+  const baseErrorUrl = new URL(merchantUrls.error as string);
+  baseErrorUrl.searchParams.append("sid", klarnaSession.data.session_id);
+  baseErrorUrl.search = decodeURIComponent(baseErrorUrl.search);
+  const errorUrl = baseErrorUrl.toString();
+
+  const baseFailureUrl = new URL(merchantUrls.failure as string);
+  baseFailureUrl.searchParams.append("sid", klarnaSession.data.session_id);
+  baseFailureUrl.search = decodeURIComponent(baseFailureUrl.search);
+  const failureUrl = baseFailureUrl.toString();
 
   const createHppSessionPayload: hppComponents["schemas"]["SessionCreationRequestV1"] = {
     payment_session_url:
       klarnaConfig.apiUrl + "/payments/v1/sessions/" + klarnaSession.data.session_id,
     merchant_urls: {
       success: successUrl,
+      back: cancelUrl,
+      cancel: backUrl,
+      error: errorUrl,
+      failure: failureUrl,
     },
   };
 

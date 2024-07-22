@@ -3,6 +3,7 @@ import { FileAPL, UpstashAPL, SaleorCloudAPL } from "@saleor/app-sdk/APL";
 import { invariant } from "./lib/invariant";
 import { env } from "./lib/env.mjs";
 import { isTest } from "./lib/isEnv";
+import { RedisAPL } from "@/lib/utils/redisApl";
 
 /**
  * By default auth data are stored in the `.auth-data.json` (FileAPL).
@@ -33,6 +34,8 @@ const getApl = async () => {
         token: env.REST_APL_TOKEN,
       });
     }
+    case "redis":
+      return new RedisAPL();
     default:
       return new FileAPL();
   }
