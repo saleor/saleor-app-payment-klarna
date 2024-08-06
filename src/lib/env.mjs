@@ -40,7 +40,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_SENTRY_DSN: z.optional(z.string().min(1)),
-    NEXT_PUBLIC_BASE_PATH: z.string().optional(),
+    NEXT_PUBLIC_BASE_PATH: z.string().optional().default(""),
   },
 
   /*

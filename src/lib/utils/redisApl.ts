@@ -4,11 +4,12 @@ import { env } from "@/lib/env.mjs";
 import { logger } from "@/lib/logger";
 
 const prepareAuthDataKey = (apiUrl: string) => `${env.APL_REDIS_APP_ID}:${apiUrl}`;
-const client = RedisAplInstance.getInstance().getClient();
 
 export class RedisAPL implements APL {
+  private client = RedisAplInstance.getInstance().getClient();
+
   async get(saleorApiUrl: string): Promise<AuthData | undefined> {
-    const response = await client.get(prepareAuthDataKey(saleorApiUrl));
+    const response = await this.client.get(prepareAuthDataKey(saleorApiUrl));
 
     if (response) {
       return JSON.parse(response) as AuthData;
@@ -21,7 +22,7 @@ export class RedisAPL implements APL {
 
   async set(authData: AuthData) {
     try {
-      await client.set(prepareAuthDataKey(authData.saleorApiUrl), JSON.stringify(authData));
+      await this.client.set(prepareAuthDataKey(authData.saleorApiUrl), JSON.stringify(authData));
     } catch (error) {
       logger.error("Error in setting auth data into redis.", error);
     }
@@ -29,7 +30,7 @@ export class RedisAPL implements APL {
 
   async delete(saleorApiUrl: string) {
     try {
-      await client.del(prepareAuthDataKey(saleorApiUrl));
+      await this.client.del(prepareAuthDataKey(saleorApiUrl));
     } catch (error) {
       logger.error("Error in deleting auth data from redis.", error);
     }

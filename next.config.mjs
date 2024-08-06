@@ -21,13 +21,14 @@ const config = {
     config.experiments = { ...config.experiments, topLevelAwait: true };
     return config;
   },
-  basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH ?? "",
 };
 
 const isSentryEnabled = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
 
 const vanillaExtractConfig = withVanillaExtract(config);
 
+// eslint-disable-next-line import/no-default-export
 export default isSentryEnabled
   ? withSentryConfig(vanillaExtractConfig, { silent: true }, { hideSourceMaps: true })
   : vanillaExtractConfig;

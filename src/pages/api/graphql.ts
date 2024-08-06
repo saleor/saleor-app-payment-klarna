@@ -11,7 +11,6 @@ export interface ContextValue {
     client: Client;
   };
   token?: string;
-  channel: string;
 }
 
 // Define type definitions (schema)
@@ -39,7 +38,6 @@ export default startServerAndCreateNextHandler(server, {
 
     return {
       token,
-      channel: "default-channel",
       dataSources: {
         client,
       },
