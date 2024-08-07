@@ -15,7 +15,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
-  output: "standalone",
+  output: process.env.NEXT_PUBLIC_BASE_PATH ? "standalone" : undefined,
   /** @param { import("webpack").Configuration } config */
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true };
