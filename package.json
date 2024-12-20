@@ -3,6 +3,7 @@
   "name": "saleor-app-payment-klarna",
   "description": "Saleor App Payment Template",
   "version": "0.0.0",
+  "license": "(BSD-3-Clause AND CC-BY-4.0)",
   "private": true,
   "repository": "github:saleor/saleor-app-payment-klarna",
   "homepage": "https://github.com/saleor/saleor-app-payment-klarna",
