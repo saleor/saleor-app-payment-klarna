@@ -62,7 +62,7 @@ pnpm generate
 
 ### Vendor software
 
-The app implements the [Hosted Payment Page flow](https://docs.klarna.com/hosted-payment-page/get-started/accept-klarna-payments-using-hosted-payment-page/) through a custom Klarna API client. The client is located in `generated/klarna.ts`. 
+The app implements the [Hosted Payment Page flow](https://docs.klarna.com/hosted-payment-page/get-started/accept-klarna-payments-using-hosted-payment-page/) through a custom Klarna API client. The client is located in `generated/klarna.ts`.
 
 ## Overview
 

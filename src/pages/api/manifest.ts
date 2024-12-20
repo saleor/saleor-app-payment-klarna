@@ -17,8 +17,8 @@ export default createManifestHandler({
       id: "app.saleor.klarna",
       name: "Klarna",
       about: packageJson.description,
-      tokenTargetUrl: `${apiBaseURL}/api/register`,
-      appUrl: iframeBaseUrl,
+      tokenTargetUrl: `${apiBaseURL}${env.NEXT_PUBLIC_BASE_PATH}/api/register`,
+      appUrl: `${iframeBaseUrl}${env.NEXT_PUBLIC_BASE_PATH}`,
       permissions: ["HANDLE_PAYMENTS"],
       version: packageJson.version,
       requiredSaleorVersion: ">=3.15.0",
@@ -26,7 +26,7 @@ export default createManifestHandler({
       supportUrl: "https://github.com/saleor/saleor-app-payment-klarna/issues",
       brand: {
         logo: {
-          default: `${apiBaseURL}/logo.png`,
+          default: `${apiBaseURL}${env.NEXT_PUBLIC_BASE_PATH}/logo.png`,
         },
       },
       webhooks: [

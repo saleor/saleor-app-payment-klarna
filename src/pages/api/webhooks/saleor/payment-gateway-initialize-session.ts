@@ -8,6 +8,7 @@ import {
 import { getSyncWebhookHandler } from "@/backend-lib/api-route-utils";
 import ValidatePaymentGatewayInitializeSessionResponse from "@/schemas/PaymentGatewayInitializeSession/PaymentGatewayInitializeSessionResponse.mjs";
 import { PaymentGatewayInitializeSessionWebhookHandler } from "@/modules/webhooks/payment-gateway-initialize-session";
+import { env } from "@/lib/env.mjs";
 
 export const config: PageConfig = {
   api: {
@@ -21,7 +22,7 @@ export const paymentGatewayInitializeSessionSyncWebhook =
     apl: saleorApp.apl,
     event: "PAYMENT_GATEWAY_INITIALIZE_SESSION",
     query: UntypedPaymentGatewayInitializeSessionDocument,
-    webhookPath: "/api/webhooks/saleor/payment-gateway-initialize-session",
+    webhookPath: `${env.NEXT_PUBLIC_BASE_PATH}/api/webhooks/saleor/payment-gateway-initialize-session`,
   });
 
 export default paymentGatewayInitializeSessionSyncWebhook.createHandler(

@@ -12,7 +12,7 @@ export const env = createEnv({
     ENV: z.enum(["development", "test", "staging", "production"]).default("development"),
     SECRET_KEY: z.string().min(8, { message: "Cannot be too short" }),
     SENTRY_DSN: z.string().min(1).optional(),
-    APL: z.enum(["saleor-cloud", "upstash", "file"]).optional().default("file"),
+    APL: z.enum(["saleor-cloud", "upstash", "file", "redis"]).optional().default("file"),
     CI: z.coerce.boolean().optional().default(false),
     APP_DEBUG: z
       .enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"])
@@ -26,6 +26,11 @@ export const env = createEnv({
     REST_APL_TOKEN: z.string().optional(),
     APP_API_BASE_URL: z.string().optional(),
     APP_IFRAME_BASE_URL: z.string().optional(),
+    APL_REDIS_APP_ID: z.string().optional(),
+    APL_REDIS_HOST: z.string().optional(),
+    APL_REDIS_PORT: z.string().optional(),
+    APL_REDIS_DB: z.string().optional(),
+    SALEOR_API_URL: z.string().optional(),
   },
 
   /*
@@ -35,6 +40,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_SENTRY_DSN: z.optional(z.string().min(1)),
+    NEXT_PUBLIC_BASE_PATH: z.string().optional().default(""),
   },
 
   /*
@@ -46,6 +52,7 @@ export const env = createEnv({
   runtimeEnv: {
     ENV: process.env.ENV,
     NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
 
     SECRET_KEY: process.env.SECRET_KEY,
     SENTRY_DSN: process.env.SENTRY_DSN,
@@ -60,5 +67,10 @@ export const env = createEnv({
     REST_APL_TOKEN: process.env.REST_APL_TOKEN,
     APP_API_BASE_URL: process.env.APP_API_BASE_URL,
     APP_IFRAME_BASE_URL: process.env.APP_IFRAME_BASE_URL,
+    APL_REDIS_APP_ID: process.env.APL_REDIS_APP_ID,
+    APL_REDIS_HOST: process.env.APL_REDIS_HOST,
+    APL_REDIS_PORT: process.env.APL_REDIS_PORT,
+    APL_REDIS_DB: process.env.APL_REDIS_DB,
+    SALEOR_API_URL: process.env.SALEOR_API_URL,
   },
 });

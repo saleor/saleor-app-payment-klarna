@@ -39,6 +39,8 @@
     "schemaVersion": "3.15"
   },
   "dependencies": {
+    "@apollo/server": "4.10.4",
+    "@as-integrations/next": "3.0.0",
     "@hookform/resolvers": "3.3.1",
     "@next/env": "13.4.19",
     "@radix-ui/react-alert-dialog": "1.0.4",
@@ -64,6 +66,7 @@
     "eslint-plugin-node": "11.1.0",
     "graphql": "16.8.0",
     "graphql-tag": "2.12.6",
+    "ioredis": "5.4.1",
     "jose": "4.14.6",
     "jsdom": "22.1.0",
     "lodash-es": "4.17.21",
@@ -79,6 +82,7 @@
     "react-dom": "18.2.0",
     "react-hook-form": "7.46.1",
     "semver": "7.5.4",
+    "tslog": "4.9.2",
     "tsx": "3.12.10",
     "url-join": "5.0.0",
     "urql": "3.0.4",

@@ -7,6 +7,7 @@ import { type AppRouter } from "./trpc-app-router";
 import { getErrorHandler } from "./utils";
 import { BaseTrpcError, JwtInvalidError, JwtTokenExpiredError } from "@/errors";
 import { appBridgeInstance } from "@/app-bridge-instance";
+import { env } from "@/lib/env.mjs";
 
 const genericErrorHandler = (err: unknown) => {
   getErrorHandler({
@@ -43,7 +44,7 @@ export const trpcClient = createTRPCNext<AppRouter>({
           },
         }),
         httpBatchLink({
-          url: "/api/trpc",
+          url: `${env.NEXT_PUBLIC_BASE_PATH}/api/trpc`,
           headers() {
             return {
               /**
